@@ -8,3 +8,44 @@
 
 
 ![teaser](./assets/teaser.jpg)
+
+
+
+
+## 📢 News
+
+(2024/03/12) 🔄The repository is created.
+
+
+### Mamba for Video Temporal Modeling
+
+supported tasks:
+Temporal Action Localization
+Temporal Action Segmentation
+Video dense captioning
+Video paragraph captioning
+Action Anticipation
+Online Action Detection
+
+supported datasets:
+
+THUMOS-14
+ActivityNet
+HACS Segment
+FineAction
+GTEA
+...
+
+
+### Mamba for Cross-modal Interaction
+
+supported tasks:
+Video temporal grounding
+
+
+### Mamba as Video Temporal Adapter
+
+
+### Mamba for Spatial-temporal Modeling
+
+
