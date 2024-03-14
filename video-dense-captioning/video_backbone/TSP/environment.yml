@@ -1,0 +1,14 @@
+name: tsp
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - torchvision=0.5.0
+  - pytorch=1.4.0
+  - cudatoolkit=10.1
+  - pandas
+  - h5py
+  - av
+  - joblib
+  - tqdm

@@ -1,0 +1,9 @@
+id: yc2_tsn_pdvc_gt
+base_cfg_path: cfgs/yc2_tsn_pdvcl_gt.yml
+
+caption_decoder_type: standard
+cap_nheads: 1
+cap_dec_n_points: 4
+cap_num_feature_levels: 4
+soft_attention: 1
+att_hid_size: 512

@@ -1,0 +1,6 @@
+id: anet_i3dvgg_pdvc
+base_cfg_path: cfgs/anet_c3d_pdvc.yml
+visual_feature_type: ['i3d_rgb', 'i3d_flow', 'vggish']
+visual_feature_folder: ['data/anet/features/i3d/', 'data/anet/features/i3d/', 'data/anet/features/vggish/']
+invalid_video_json: ['data/anet/features/I3D_vggish_invalid_videos.json']
+feature_dim: 2176

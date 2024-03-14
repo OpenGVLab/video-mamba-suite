@@ -1,0 +1,6 @@
+id: anet_tsp_pdvcl
+base_cfg_path: cfgs/anet_c3d_pdvcl.yml
+visual_feature_type: ['tsp']
+visual_feature_folder: ['data/anet/features/tsp']
+invalid_video_json: []
+feature_dim: 512

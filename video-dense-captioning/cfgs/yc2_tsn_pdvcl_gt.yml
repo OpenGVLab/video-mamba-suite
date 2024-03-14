@@ -1,0 +1,57 @@
+id: yc2_tsn_pdvcl_gt
+
+visual_feature_type: ['resnet', 'bn']
+visual_feature_folder: ['data/yc2/features/resnet_bn/', 'data/yc2/features/resnet_bn/']
+feature_dim: 3072
+invalid_video_json: []
+train_caption_file: 'data/yc2/captiondata/yc2_train.json'
+val_caption_file: 'data/yc2/captiondata/yc2_val.json'
+gt_file_for_eval: ['data/yc2/captiondata/yc2_val.json']
+gt_file_for_para_eval: ['data/yc2/captiondata/para/para_yc2_val.json']
+dict_file: data/yc2/vocabulary_youcook2.json
+vocab_size: 1607
+
+train_proposal_type: gt
+gt_proposal_sample_num: 30
+sample_method: nearest
+
+batch_size: 1
+lr: 0.00005
+learning_rate_decay_start: 8
+learning_rate_decay_every: 3
+learning_rate_decay_rate: 0.5
+weight_decay: 0.0001
+save_all_checkpoint: 0
+
+num_queries: 100
+dec_layers: 2
+enc_layers: 2
+transformer_ff_dim: 512
+transformer_dropout_prob: 0.1
+frame_embedding_num: 200
+caption_decoder_type: light
+att_hid_size: 0
+
+#with_box_refine: 1
+
+fix_xcw: 1
+set_cost_caption: 0
+set_cost_giou: 4
+set_cost_bbox: 0.0001
+set_cost_class: 0
+#cost_alpha: 0.5
+#cost_gamma: 1
+#focal_alpha: 0.5
+#focal_gamma: 1
+caption_loss_coef: 2
+giou_loss_coef: 0
+bbox_loss_coef: 0
+cls_loss_coef: 0
+count_loss_coef: 0
+#max_eseq_length: 10
+#lloss_cross_entropy: 0
+#lloss_focal_loss: 0
+#lloss_gau_mask: 1
+
+#two_stage: 1
+transformer_input_type: gt_proposals

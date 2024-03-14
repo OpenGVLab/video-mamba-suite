@@ -1,0 +1,58 @@
+Collecting causal-conv1d
+  Downloading causal_conv1d-1.1.3.post1.tar.gz (6.6 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Requirement already satisfied: torch in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from causal-conv1d) (1.13.0)
+Requirement already satisfied: packaging in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from causal-conv1d) (23.1)
+Collecting buildtools
+  Using cached buildtools-1.0.6-py3-none-any.whl
+Requirement already satisfied: ninja in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from causal-conv1d) (1.10.2.3)
+Collecting redo
+  Using cached redo-2.0.4-py2.py3-none-any.whl (12 kB)
+Requirement already satisfied: jinja2 in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from buildtools->causal-conv1d) (3.1.2)
+Collecting furl
+  Using cached furl-2.1.3-py2.py3-none-any.whl (20 kB)
+Requirement already satisfied: docopt in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from buildtools->causal-conv1d) (0.6.2)
+Requirement already satisfied: sqlalchemy in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from buildtools->causal-conv1d) (1.4.40)
+Collecting argparse
+  Using cached argparse-1.4.0-py2.py3-none-any.whl (23 kB)
+Requirement already satisfied: python-dateutil in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from buildtools->causal-conv1d) (2.8.2)
+Requirement already satisfied: requests in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from buildtools->causal-conv1d) (2.28.0)
+Collecting twisted
+  Using cached twisted-23.10.0-py3-none-any.whl (3.2 MB)
+Requirement already satisfied: simplejson in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from buildtools->causal-conv1d) (3.17.6)
+Requirement already satisfied: nvidia-cuda-nvrtc-cu11==11.7.99 in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from torch->causal-conv1d) (11.7.99)
+Requirement already satisfied: typing-extensions in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from torch->causal-conv1d) (4.8.0)
+Requirement already satisfied: nvidia-cublas-cu11==11.10.3.66 in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from torch->causal-conv1d) (11.10.3.66)
+Requirement already satisfied: nvidia-cuda-runtime-cu11==11.7.99 in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from torch->causal-conv1d) (11.7.99)
+Requirement already satisfied: nvidia-cudnn-cu11==8.5.0.96 in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from torch->causal-conv1d) (8.5.0.96)
+Requirement already satisfied: wheel in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from nvidia-cublas-cu11==11.10.3.66->torch->causal-conv1d) (0.37.1)
+Requirement already satisfied: setuptools in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from nvidia-cublas-cu11==11.10.3.66->torch->causal-conv1d) (59.5.0)
+Requirement already satisfied: six>=1.8.0 in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from furl->buildtools->causal-conv1d) (1.16.0)
+Collecting orderedmultidict>=1.0.1
+  Using cached orderedmultidict-1.0.1-py2.py3-none-any.whl (11 kB)
+Requirement already satisfied: MarkupSafe>=2.0 in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from jinja2->buildtools->causal-conv1d) (2.1.1)
+Requirement already satisfied: idna<4,>=2.5 in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from requests->buildtools->causal-conv1d) (3.3)
+Requirement already satisfied: certifi>=2017.4.17 in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from requests->buildtools->causal-conv1d) (2022.6.15)
+Requirement already satisfied: urllib3<1.27,>=1.21.1 in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from requests->buildtools->causal-conv1d) (1.26.16)
+Requirement already satisfied: charset-normalizer~=2.0.0 in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from requests->buildtools->causal-conv1d) (2.0.4)
+Requirement already satisfied: greenlet!=0.4.17 in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from sqlalchemy->buildtools->causal-conv1d) (1.1.3)
+Collecting automat>=0.8.0
+  Using cached Automat-22.10.0-py2.py3-none-any.whl (26 kB)
+Collecting incremental>=22.10.0
+  Using cached incremental-22.10.0-py2.py3-none-any.whl (16 kB)
+Requirement already satisfied: attrs>=21.3.0 in /mnt/petrelfs/chenguo/miniconda3/envs/w/lib/python3.9/site-packages (from twisted->buildtools->causal-conv1d) (22.1.0)
+Collecting zope-interface>=5
+  Using cached zope.interface-6.1-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (246 kB)
+Collecting hyperlink>=17.1.1
+  Using cached hyperlink-21.0.0-py2.py3-none-any.whl (74 kB)
+Collecting constantly>=15.1
+  Using cached constantly-23.10.4-py3-none-any.whl (13 kB)
+Building wheels for collected packages: causal-conv1d
+  Building wheel for causal-conv1d (setup.py): started
+  Building wheel for causal-conv1d (setup.py): finished with status 'done'
+  Created wheel for causal-conv1d: filename=causal_conv1d-1.1.3.post1-cp39-cp39-linux_x86_64.whl size=13671149 sha256=2c87115b60178bd99a0e79ad04b39c5bde33d61649be44953e34b4feb5f17613
+  Stored in directory: /mnt/lustre/chenguo/.cache/pip/wheels/e3/9f/d6/b48959c4fbbc6e1ecbeafc16ecd59a7e2f65339092dc6c281c
+Successfully built causal-conv1d
+Installing collected packages: redo, incremental, argparse, zope-interface, orderedmultidict, hyperlink, constantly, automat, twisted, furl, buildtools, causal-conv1d
+Successfully installed argparse-1.4.0 automat-22.10.0 buildtools-1.0.6 causal-conv1d-1.1.3.post1 constantly-23.10.4 furl-2.1.3 hyperlink-21.0.0 incremental-22.10.0 orderedmultidict-1.0.1 redo-2.0.4 twisted-23.10.0 zope-interface-6.1

@@ -1,0 +1,6 @@
+id: anet_tsn_pdvc
+base_cfg_path: cfgs/anet_c3d_pdvc.yml
+visual_feature_type: ['resnet', 'bn']
+visual_feature_folder: ['data/anet/features/resnet_bn', 'data/anet/features/resnet_bn']
+invalid_video_json: ['data/anet/features/resnet_bn_invalid_videos.json']
+feature_dim: 3072

@@ -1,0 +1,51 @@
+id: anet_c3d_props
+visual_feature_type: c3d
+visual_feature_folder: 'data/anet/features/c3d'
+feature_dim: 500
+invalid_video_json: []
+train_proposal_file: data/generated_proposals/dbg_trainval_top100.json
+eval_proposal_file: data/generated_proposals/dbg_trainval_top100.json
+gt_file_for_eval: ['data/anet/captiondata/val_1.json', 'data/anet/captiondata/val_2.json']
+gt_file_for_para_eval: ['data/anet/captiondata/para/anet_entities_val_1_para.json', 'data/anet/captiondata/para/anet_entities_val_2_para.json']
+
+train_proposal_type: gt
+train_proposal_sample_num: 15
+sample_method: nearest
+
+batch_size: 1
+lr: 0.00005
+learning_rate_decay_start: 8
+learning_rate_decay_every: 3
+learning_rate_decay_rate: 0.5
+weight_decay: 0.0001
+save_all_checkpoint: 0
+
+num_queries: 10
+dec_layers: 2
+enc_layers: 2
+transformer_ff_dim: 512
+transformer_dropout_prob: 0.1
+frame_embedding_num: 100
+caption_decoder_type: none
+att_hid_size: 0
+
+with_box_refine: 1
+
+fix_xcw: 1
+set_cost_caption: 0
+set_cost_giou: 4
+set_cost_bbox: 0
+set_cost_class: 2
+#cost_alpha: 0.5
+#cost_gamma: 1
+#focal_alpha: 0.5
+#focal_gamma: 1
+caption_loss_coef: 0
+giou_loss_coef: 4
+bbox_loss_coef: 0
+cls_loss_coef: 2
+count_loss_coef: 0.5
+max_eseq_length: 10
+lloss_cross_entropy: 0
+lloss_focal_loss: 0
+lloss_gau_mask: 1

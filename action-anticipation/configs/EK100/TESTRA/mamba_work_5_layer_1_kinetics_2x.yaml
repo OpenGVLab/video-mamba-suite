@@ -1,0 +1,54 @@
+DATA:
+  DATA_NAME: 'EK100'
+  CLIP_MIXUP_RATE: 0.25
+  CLIP_MIXUP_SAMPLE: 'uniform'
+  CLIP_MIXUP_RATIO: 0.5
+  EK_EXT_PATH: 'external/rulstm/RULSTM/data/ek100/'
+INPUT:
+  MODALITY: 'twostream'
+  VISUAL_FEATURE: 'rgb_kinetics_bninception'
+  MOTION_FEATURE: 'flow_kinetics_bninception'
+  OBJECT_FEATURE: 'flow_kinetics_bninception' # not used
+MODEL:
+  MODEL_NAME: 'LSTR'
+  FEATURE_HEAD:
+    LINEAR_ENABLED: True
+    LINEAR_OUT_FEATURES: 1024
+  LSTR:
+    MAMBA_LAYER: 1
+    NUM_HEADS: 8
+    DIM_FEEDFORWARD: 1024
+    DROPOUT: 0.1
+    DROPOUT_CLS: 0.8
+    ACTIVATION: 'relu'
+    LONG_MEMORY_SECONDS: 0
+    LONG_MEMORY_SAMPLE_RATE: 4
+    LONG_MEMORY_INCLUDE_WORK: True
+    WORK_MEMORY_SECONDS: 5
+    WORK_MEMORY_SAMPLE_RATE: 2
+    ANTICIPATION_SECONDS: 2
+    ANTICIPATION_SAMPLE_RATE: 4
+    ENC_MODULE: [
+      [16, 1, True], [16, 2, True]
+    ]
+    DEC_MODULE: [-1, 1, True]
+    V_N_CLASSIFIER: True
+    LOSS_WEIGHT_V: 1.
+    LOSS_WEIGHT_N: 1.
+    FUSION_WEIGHT_V: 1.
+    FUSION_WEIGHT_N: 1.
+  CRITERIONS: [['MCE_EQL', {'anno_path': 'external/rulstm/RULSTM/data/ek100/'}], ['MCE', {}]]
+DATA_LOADER:
+  BATCH_SIZE: 32
+  NUM_WORKERS: 4
+  PIN_MEMORY: True
+SOLVER:
+  NUM_EPOCHS: 30 
+  OPTIMIZER: 'adam'
+  BASE_LR: 5e-05
+  WEIGHT_DECAY: 1e-4
+  SCHEDULER:
+    SCHEDULER_NAME: 'warmup_cosine'
+    WARMUP_FACTOR: 0.3
+    WARMUP_EPOCHS: 5.0
+    WARMUP_METHOD: 'linear'

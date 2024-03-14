@@ -1,0 +1,43 @@
+DATA:
+  DATA_NAME: 'THUMOS'
+INPUT:
+  MODALITY: 'twostream'
+  VISUAL_FEATURE: 'rgb_kinetics_resnet50'
+  MOTION_FEATURE: 'flow_kinetics_bninception'
+  OBJECT_FEATURE: 'flow_kinetics_bninception'
+MODEL:
+  MODEL_NAME: 'LSTR'
+  FEATURE_HEAD:
+    LINEAR_ENABLED: True
+    LINEAR_OUT_FEATURES: 1024
+  LSTR:
+    MAMBA_LAYER: 2
+    NUM_HEADS: 16
+    DIM_FEEDFORWARD: 1024
+    DROPOUT: 0.2
+    ACTIVATION: 'relu'
+    LONG_MEMORY_SECONDS: 0
+    LONG_MEMORY_SAMPLE_RATE: 4
+    LONG_MEMORY_USE_PE: False
+    LONG_MEMORY_INCLUDE_WORK: True
+    WORK_MEMORY_SECONDS: 8
+    WORK_MEMORY_SAMPLE_RATE: 1
+    ENC_MODULE: [
+      [16, 1, True], [32, 2, True]
+    ]
+    DEC_MODULE: [-1, 2, True]
+  CRITERIONS: [['MCE', {}]]
+DATA_LOADER:
+  BATCH_SIZE: 16
+  NUM_WORKERS: 8
+  PIN_MEMORY: True
+SOLVER:
+  NUM_EPOCHS: 25
+  OPTIMIZER: 'adam'
+  BASE_LR: 7e-05
+  WEIGHT_DECAY: 5e-05
+  SCHEDULER:
+    SCHEDULER_NAME: 'warmup_cosine'
+    WARMUP_FACTOR: 0.3
+    WARMUP_EPOCHS: 10.0
+    WARMUP_METHOD: 'linear'
