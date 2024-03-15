@@ -1,7 +1,6 @@
 <div align="center">
-
-<h2><a href="">Video Mamba Suite: State Space Model as a Versatile Alternative
-for Video Understanding</a></h2>
+<img src="./assets/logo_trans.png" style='width: 25%'>
+<h2></img><a href="https://arxiv.org/abs/2403.09626">Video Mamba Suite: State Space Model as a Versatile Alternative for Video Understanding</a></h2>
 
 [Guo Chen](https://scholar.google.com/citations?user=lRj3moAAAAAJ), [Yifei Huang](https://scholar.google.com/citations?user=RU8gNcgAAAAJ), [Jilan Xu](https://scholar.google.com/citations?user=mf2U64IAAAAJ), [Baoqi Pei](), [Zhe Chen](https://scholar.google.com/citations?user=j1rq_lYAAAAJ), [Zhiqi Li](https://scholar.google.com/citations?user=H2fJLqEAAAAJ), [Jihao Wang](), [Kunchang Li](https://scholar.google.com/citations?user=D4tLSbsAAAAJ), [Tong Lu]() and [Limin Wang](https://scholar.google.com/citations?user=HEuN8PcAAAAJ).
 
@@ -115,10 +114,10 @@ If you find this repository useful, please use the following BibTeX entry for ci
 
 ```latex
 @misc{2024videomambasuite,
-      title={State Space Model as a Versatile Alternative for Video Understanding}, 
-      author={o},
+      title={Video Mamba Suite: State Space Model as a Versatile Alternative for Video Understanding}, 
+      author={Guo Chen, Yifei Huang, Jilan Xu, Baoqi Pei, Zhe Chen, Zhiqi Li, Jiahao Wang, Kunchang Li, Tong Lu, Limin Wang},
       year={2024},
-      eprint={},
+      eprint={2403.09626},
       archivePrefix={arXiv},
       primaryClass={cs.CV}
 }
