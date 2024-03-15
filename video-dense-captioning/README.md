@@ -1,4 +1,4 @@
-# PDVC-Mamba
+# Video Mamba Suite: Dense Video Caption
 
 Implementation for Mamba-based PDVC (ICCV 2021) 
 [[paper]](https://arxiv.org/abs/2108.07781)
@@ -25,16 +25,23 @@ pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --e
 conda install ffmpeg
 pip install -r requirement.txt
 ```
+2. Install evaluation kit.
+```bash
+cd densevid_eval3
+git clone https://github.com/fujiso/SODA.git
 
-2. Compile the deformable attention layer (requires GCC >= 5.4). 
+```
+
+3. Compile the deformable attention layer (requires GCC >= 5.4). 
 ```bash
 cd pdvc/ops
 sh make.sh
 ```
 
-3. Install mamba follow the main README.md, make sure you can import mamba successfully
+4. Install mamba follow the main README.md, make sure you can import mamba successfully
 ```bash
-from mamba_ssm.modules.mamba2 import Mamba
+from mamba_ssm.modules.mamba_simple import Mamba
+from mamba_ssm.modules.mamba_new import Mamba 
 ```
 
 
@@ -79,7 +86,7 @@ torchrun --nproc_per_node=8 train.py \
 --cfg_path cfgs/anet_c3d_pdvc.yml \ 
 --disable_cudnn 1 \
 --save_dir /path/to/your/folder/anet_c3d_pdvc_mamba_8gpus/ \
---encoder_type mamba \ 
+--encoder_type mamba-vim \ 
 
 ```
 
@@ -89,7 +96,7 @@ torchrun --nproc_per_node=1 train.py \
 --cfg_path cfgs/yc2_tsn_pdvc.yml \ 
 --disable_cudnn 1 \
 --save_dir /path/to/your/folder/yc2_tsn_pdvc_mamba_1gpu/ \
---encoder_type mamba \ 
+--encoder_type mamba-vim \ 
 
 ```
 
@@ -104,7 +111,7 @@ torchrun --nproc_per_node=8 train.py \
 --disable_cudnn 1 \
 --criteria_for_best_ckpt pc \
 --save_dir /path/to/your/folder/anet_c3d_pc_mamba_8gpus/ \
---encoder_type mamba \ 
+--encoder_type mamba-vim \ 
 ```
 
 ## Performance

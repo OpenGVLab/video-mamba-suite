@@ -1,0 +1,6 @@
+[submodule "video-dense-captioning/densevid_eval3/SODA"]
+	path = video-dense-captioning/densevid_eval3/SODA
+	url = https://github.com/fujiso/SODA.git
+[submodule "video-dense-captioning/densevid_eval3/pycocoevalcap"]
+	path = video-dense-captioning/densevid_eval3/pycocoevalcap
+	url = https://github.com/salaniz/pycocoevalcap.git
