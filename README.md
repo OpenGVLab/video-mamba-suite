@@ -36,7 +36,7 @@ We hope this work could provide valuable data points and insights for future res
 
 [Temporal Action Segmentation]()
 
-[Video dense captioning]()
+[Video dense captioning](./video-dense-captioning/README.md)
 
 [Video paragraph captioning]()
 

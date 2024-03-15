@@ -25,20 +25,14 @@ pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --e
 conda install ffmpeg
 pip install -r requirement.txt
 ```
-2. Install evaluation kit.
-```bash
-cd densevid_eval3
-git clone https://github.com/fujiso/SODA.git
 
-```
-
-3. Compile the deformable attention layer (requires GCC >= 5.4). 
+2. Compile the deformable attention layer (requires GCC >= 5.4). 
 ```bash
 cd pdvc/ops
 sh make.sh
 ```
 
-4. Install mamba follow the main README.md, make sure you can import mamba successfully
+3. Install mamba follow the main README.md, make sure you can import mamba successfully
 ```bash
 from mamba_ssm.modules.mamba_simple import Mamba
 from mamba_ssm.modules.mamba_new import Mamba 
