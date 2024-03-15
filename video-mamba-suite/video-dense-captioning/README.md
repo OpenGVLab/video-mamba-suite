@@ -1,4 +1,4 @@
-# Video Mamba Suite: Dense Video Caption
+# Video Mamba Suite: Dense Video Captioning
 
 Implementation for Mamba-based PDVC (ICCV 2021) 
 [[paper]](https://arxiv.org/abs/2108.07781)

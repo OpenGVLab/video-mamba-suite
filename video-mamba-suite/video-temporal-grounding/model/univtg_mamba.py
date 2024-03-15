@@ -21,15 +21,14 @@ from timm.models.layers import DropPath
 import math
 
 from collections import namedtuple
-from timm.models.layers import trunc_normal_
-from mamba_ssm.modules.mamba_simple import Mamba
-from mamba_ssm.utils.generation import GenerationMixin
-from mamba_ssm.utils.hf import load_config_hf, load_state_dict_hf
+
 
 from .rope import *
 import random
 
 try:
+    from mamba_ssm.modules.mamba_simple import Mamba as ViM
+    from mamba_ssm.modules.mamba_new import Mamba as DBM
     from mamba_ssm.ops.triton.layernorm import RMSNorm, layer_norm_fn, rms_norm_fn
 except ImportError:
     RMSNorm, layer_norm_fn, rms_norm_fn = None, None, None
@@ -46,17 +45,16 @@ def create_block(
     layer_idx=None,
     device=None,
     dtype=None,
-    bimamba_type="none"
+    bimamba_type="none",
+    mamba_type="vim"
 ):
     if ssm_cfg is None:
         ssm_cfg = {}
     factory_kwargs = {"device": device, "dtype": dtype}
-\
-    use_vim = True # use vim or our mamba
-    if not use_vim:  
-        mixer_cls = partial(Mamba, layer_idx=layer_idx, **ssm_cfg, **factory_kwargs)
+    if mamba_type == "vim":  
+        mixer_cls = partial(ViM, layer_idx=layer_idx, bimamba_type=bimamba_type, **ssm_cfg, **factory_kwargs)
     else:
-        mixer_cls = partial(Mamba, layer_idx=layer_idx, bimamba_type=bimamba_type, **ssm_cfg, **factory_kwargs)
+        mixer_cls = partial(DBM, layer_idx=layer_idx, **ssm_cfg, **factory_kwargs)
 
     norm_cls = partial(
         nn.LayerNorm if not rms_norm else RMSNorm, eps=norm_epsilon, **factory_kwargs
