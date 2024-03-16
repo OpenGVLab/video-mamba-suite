@@ -47,8 +47,6 @@ ActionMamba | DBM | **45.44** | **28.82** | **6.79** | **29.04** |
 
 ## Installation
 * Follow [INSTALL.md](./INSTALL.md) for installing necessary dependencies and compiling the code.
-* The annotations for the used data can be downloaded from [here](https://pjlab-my.sharepoint.cn/:u:/g/personal/wangyi_pjlab_org_cn/EbMrA1ltSdBPttMho9pe0cYBshPWec7IKmYFTNMGvdmT1A?e=jsmerl). Unzip and put them in the folder `./data`.
-
 ## Data Preparation
 ### 1. Download InternVideo2 Features and Annotations
 
