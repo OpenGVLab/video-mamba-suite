@@ -19,9 +19,8 @@ Implementation for Mamba-based PDVC (ICCV 2021)
 
 
 ## Preparation
-1. Install pytorch and dependencies.
+1. Install pytorch and dependencies. The code is run successfully on (1) torch==1.13.1+cu117 or (2) torch==2.1.2+cu118, other pytorch versions may also work. 
 ```bash
-pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu117
 conda install ffmpeg
 pip install -r requirement.txt
 ```
@@ -36,6 +35,16 @@ sh make.sh
 ```bash
 from mamba_ssm.modules.mamba_simple import Mamba
 from mamba_ssm.modules.mamba_new import Mamba 
+```
+
+4. Make sure the submodules SODA and pycocoevalcap exists, which are used for evaluation.
+```bash
+from densevid_eval3.SODA.soda import SODA
+```
+If the modules do not exist, please make sure you have cloned the repo with '--recursive', or run
+```bash
+cd path/to/your/video-mamba-suite/
+git submodule update --init --recursive
 ```
 
 
