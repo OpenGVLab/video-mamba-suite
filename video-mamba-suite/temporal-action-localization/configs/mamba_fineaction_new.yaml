@@ -1,0 +1,61 @@
+dataset_name: hacs
+train_split: ['training']
+val_split: ['validation']
+dataset: {
+  json_file: ./data/fineaction/annotations/fineaction_annotations_gt_filter.json,
+  feat_folder: /path/to/feature,
+  file_prefix: ~,
+  file_ext: .pt,
+  feature_type: _spatial_pool_feature_5,
+  num_classes: 106,
+  input_dim: 1408,
+  feat_stride: 4,
+  num_frames: 16,
+  default_fps: 30,
+  trunc_thresh: 0.5,
+  downsample_rate: 2,
+  crop_ratio: [0.9, 1.0],
+  # upsample the features to a fixed length of 192
+  max_seq_len: 2304,
+  # force_upsampling: True,
+}
+model: {
+  backbone_type: mamba,
+  regression_range: [ [ 0, 4 ], [ 4, 8 ], [ 8, 16 ], [ 16, 32 ], [ 32, 64 ], [ 64, 128 ], [ 128, 256 ], [ 256, 10000 ] ],
+  backbone_arch: [ 2, 2, 7 ],
+  fpn_type: identity,
+  max_buffer_len_factor: 30.0,
+  n_mha_win_size: 7,
+}
+opt: {
+  learning_rate: 0.001,
+  epochs: 20,
+  weight_decay: 0.05,
+}
+loader: {
+  batch_size: 16,
+}
+train_cfg: {
+  init_loss_norm: 100,
+  clip_grad_l2norm: 1.0,
+  cls_prior_prob: 0.01,
+  center_sample: radius,
+  center_sample_radius: 1.5,
+  droppath: 0.1,
+}
+# the inference on THUMOS is quite different from EPIC-kitchens
+# a major performance gain is achieved by fusing external classification scores
+# doing so will require disable multiclass_nms and enable score fusion
+test_cfg: {
+  voting_thresh: 0.7,
+  pre_nms_topk: 2000,
+  max_seg_num: 200,
+  min_score: 0.001,
+  # when using external scores, our model is generating "proposals"
+  # multiclass_nms: False,
+  # ext_score_file: ./data/thumos/annotations/thumos14_cls_scores.pkl,
+  # comment out L47-48 and uncomment L50 to disable score fusion
+  multiclass_nms: True,
+}
+output_folder: ./ckpt_fineaction/
+

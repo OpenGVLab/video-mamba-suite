@@ -907,7 +907,7 @@ class MaskMambaBlock(nn.Module):
         drop_path_rate=0.3,         # drop path rate
     ) -> None:
         super().__init__()
-        self.mamba = ViM(n_embd, d_conv=kernel_size, use_fast_path=True, expand=2)
+        self.mamba = ViM(n_embd, d_conv=kernel_size, use_fast_path=True, bimamba_type='v2')
         if n_ds_stride > 1:
             self.downsample = MaxPooler(kernel_size=3, stride=2, padding=1)
         else:
