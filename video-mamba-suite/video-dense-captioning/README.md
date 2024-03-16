@@ -124,14 +124,14 @@ torchrun --nproc_per_node=8 train.py \
 |  ----  |  ----    |   ----  |  ----  |  ----   |  ----  |   ----  |  ----  |  ----  |  ----  | ---- |
 | PDVC-Deformable   | C3D  | cfgs/anet_c3d_pdvc.yml |  todo |  51.74   |  56.11  | 1.75  |  6.73  |  14.73  | 26.07  |  5.47  |
 | PDVC-Mamba   | C3D  | cfgs/anet_c3d_pdvc.yml | todo  |  52.45   |  56.33  | 1.76 |  7.16 | 14.83 | 26.77 |   5.27  |   
-| 
+
 
 ### Dense video captioning on YouCook2 (with learnt proposals)
 |  Model | Features | config_path |   Url   | Recall | Precision |    B-4   | M | R |  C | SODA |
 |  ----  |  ----    |   ----  |  ----  |  ----   |  ----  |   ----  |  ----  |  ----  |  ----  | ---- |
 | PDVC-Deformable   | TSN  | cfgs/yc2_tsn_pdvc.yml |  todo |  23.00  |  31.12  | 0.73  |  4.25  |  9.31  | 20.48  |  4.02  |
 | PDVC-Mamba   | TSN  | cfgs/yc2_tsn_pdvc.yml | todo  |  25.27   |  32.41  | 0.86 |  4.44 | 9.62 | 21.90 |  4.32  |
-| 
+
 
 Notes:
 'B-4', 'M', 'R', 'C' refers to 'BLEU-4', 'METEOR', 'ROUGE-L' and 'CIDER'. More details can be found in [PDVC](https://github.com/ttengwang/PDVC/tree/main)
