@@ -44,13 +44,7 @@ class DeformableTransformer(nn.Module):
                                                             dropout, activation,
                                                             num_feature_levels, nhead, enc_n_points)
         else:
-            if encoder_type == "mamba-vim":
-                mamba_cls = ViM
-            elif encoder_type == "mamba-dbm":
-                mamba_cls = DBM
-            else:
-                raise NotImplementedError
-            encoder_layer = MambaEncoderLayer(mamba_cls, d_model, dim_feedforward,
+            encoder_layer = MambaEncoderLayer(encoder_type, d_model, dim_feedforward,
                                                 dropout, activation,
                                                 num_feature_levels, nhead, enc_n_points)
                                                 
@@ -238,14 +232,21 @@ class DeformableTransformerEncoder(nn.Module):
 
 class MambaEncoderLayer(nn.Module):
     def __init__(self,
-                 mamba_cls,
+                 # mamba_cls,
+                 encoder_type,
                  d_model=256, d_ffn=1024,
                  dropout=0.1, activation="relu",
                  n_levels=4, n_heads=8, n_points=4):
         super().__init__()
         
         # self attention
-        self.self_attn = mamba_cls(d_model, d_conv=4, bimamba_type="v2", use_fast_path=True, expand=1)
+        if encoder_type == 'mamba-vim':
+            self.self_attn = ViM(d_model, d_conv=4, bimamba_type="v2", use_fast_path=True)
+        elif encoder_type == 'mamba-dbm':
+            self.self_attn = DBM(d_model, d_conv=4, use_fast_path=True, expand=1)
+        else:
+            raise NotImplementedError
+
         self.dropout1 = nn.Dropout(dropout)
         self.norm1 = nn.LayerNorm(d_model)
 

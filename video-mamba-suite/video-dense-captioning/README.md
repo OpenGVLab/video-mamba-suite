@@ -89,7 +89,7 @@ torchrun --nproc_per_node=8 train.py \
 --cfg_path cfgs/anet_c3d_pdvc.yml \ 
 --disable_cudnn 1 \
 --save_dir /path/to/your/folder/anet_c3d_pdvc_mamba_8gpus/ \
---encoder_type mamba-vim \ 
+--encoder_type mamba-dbm \ 
 
 ```
 
@@ -99,7 +99,7 @@ torchrun --nproc_per_node=1 train.py \
 --cfg_path cfgs/yc2_tsn_pdvc.yml \ 
 --disable_cudnn 1 \
 --save_dir /path/to/your/folder/yc2_tsn_pdvc_mamba_1gpu/ \
---encoder_type mamba-vim \ 
+--encoder_type mamba-dbm \ 
 
 ```
 
@@ -114,7 +114,7 @@ torchrun --nproc_per_node=8 train.py \
 --disable_cudnn 1 \
 --criteria_for_best_ckpt pc \
 --save_dir /path/to/your/folder/anet_c3d_pc_mamba_8gpus/ \
---encoder_type mamba-vim \ 
+--encoder_type mamba-dbm \ 
 ```
 
 ## Performance
