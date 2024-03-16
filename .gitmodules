@@ -4,9 +4,3 @@
 [submodule "video-dense-captioning/densevid_eval3/pycocoevalcap"]
 	path = video-mamba-suite/video-dense-captioning/densevid_eval3/pycocoevalcap
 	url = https://github.com/salaniz/pycocoevalcap.git
-[submodule "video-mamba-suite/video-dense-captioning/densevid_eval3/pycocoevalcap"]
-	path = video-mamba-suite/video-dense-captioning/densevid_eval3/pycocoevalcap
-	url = https://github.com/salaniz/pycocoevalcap.git
-[submodule "video-mamba-suite/video-dense-captioning/densevid_eval3/SODA"]
-	path = video-mamba-suite/video-dense-captioning/densevid_eval3/SODA
-	url = https://github.com/fujiso/SODA.git
