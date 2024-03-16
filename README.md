@@ -32,17 +32,15 @@ We hope this work could provide valuable data points and insights for future res
 ### Mamba for Video Temporal Modeling
 
 #### Supported tasks:
-[Temporal Action Localization]()
+[Temporal Action Localization](./video-mamba-suite/temporal-action-localization/README.md)
 
-[Temporal Action Segmentation]()
+[Temporal Action Segmentation](./video-mamba-suite/temporal-action-segmentation/README.MD)
 
-[Video dense captioning](./video-dense-captioning/README.md)
+[Video dense captioning](./video-mamba-suite/video-dense-captioning/README.md)
 
+[Video paragraph captioning](./video-mamba-suite/video-dense-captioning/README.md)
 
-
-[Video paragraph captioning]()
-
-[Action Anticipation]()
+[Action Anticipation](./video-mamba-suite/action-anticipation/README.md)
 
 
 
@@ -51,9 +49,9 @@ We hope this work could provide valuable data points and insights for future res
 
 Supported tasks:
 
-[Video Temporal Grounding]()
+[Video Temporal Grounding](./video-mamba-suite/video-temporal-grounding/README.md)
 
-[Highlight Detection]()
+[Highlight Detection](./video-mamba-suite/video-temporal-grounding/README.md)
 
 
 
