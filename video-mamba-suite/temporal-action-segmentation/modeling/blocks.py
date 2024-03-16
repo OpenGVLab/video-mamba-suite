@@ -5,8 +5,11 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 from .weight_init import trunc_normal_
-from mamba_ssm.modules.mamba2 import Mamba2
-from mamba_ssm.modules.mamba_simple import Mamba
+try:
+    from mamba_ssm.modules.mamba_simple import Mamba as ViM
+    from mamba_ssm.modules.mamba_new import Mamba as DBM
+except:
+    print('Please install mamba_ssm before using Mamba encoder')
 
 
 class MaskedConv1D(nn.Module):
@@ -904,7 +907,7 @@ class MaskMambaBlock(nn.Module):
         drop_path_rate=0.3,         # drop path rate
     ) -> None:
         super().__init__()
-        self.mamba = Mamba(n_embd, d_conv=kernel_size, use_fast_path=True, expand=1, dt_rank=64)
+        self.mamba = ViM(n_embd, d_conv=kernel_size, use_fast_path=True, expand=2)
         if n_ds_stride > 1:
             self.downsample = MaxPooler(kernel_size=3, stride=2, padding=1)
         else:
@@ -943,7 +946,7 @@ class MaskMambaBlock_DBM(nn.Module):
         drop_path_rate=0.3,         # drop path rate
     ) -> None:
         super().__init__()
-        self.mamba = Mamba2(n_embd, d_conv=kernel_size, use_fast_path=True, expand=1, dt_rank=64)
+        self.mamba = DBM(n_embd, d_conv=kernel_size, use_fast_path=True, expand=1)
         if n_ds_stride > 1:
             self.downsample = MaxPooler(kernel_size=3, stride=2, padding=1)
         else:
