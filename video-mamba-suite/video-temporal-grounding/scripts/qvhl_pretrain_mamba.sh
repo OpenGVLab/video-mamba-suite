@@ -66,8 +66,8 @@ depth=6
 
 
 ######## data paths
-train_path=/yourrootpath/grounding_meta/qvhighlights/qvhighlights_train.jsonl
-eval_path=/yourrootpath/grounding_meta/qvhighlights/qvhighlights_val.jsonl
+train_path=/mnt/petrelfs/share_data/chenguo/grounding_meta/qvhighlights/qvhighlights_train.jsonl
+eval_path=/mnt/petrelfs/share_data/chenguo/grounding_meta/qvhighlights/qvhighlights_val.jsonl
 eval_split_name=val
 feat_root=QVHighlights
 
@@ -103,7 +103,8 @@ NNODE=1
 NUM_GPUS=1
 NUM_CPU=32
 PARTITION='Gvlab-S1'
-feat_root_path='your feature path'
+feat_root_path='cluster2:s3://videos/univtg_feature'
+mamba_type='vim'
 
 echo ${train_path}
 srun -p ${PARTITION} \
@@ -157,5 +158,5 @@ srun -p ${PARTITION} \
   --pin_memory \
   --use_mamba \
   --depth ${depth} \
-  --feat_root ${feat_root_path}
+  --feat_root ${feat_root_path} --mamba_type ${mamba_type}
 

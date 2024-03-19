@@ -103,7 +103,7 @@ NNODE=1
 NUM_GPUS=1
 NUM_CPU=32
 PARTITION='Gvlab-S1'
-
+mamba_type='vim'
 feat_root_path='your feature path'
 
 echo ${train_path}
@@ -156,5 +156,5 @@ srun -p ${PARTITION} \
   --round_multiple ${round_multiple} \
   --hidden_dim ${hidden_dim} \
   --pin_memory --use_mamba --depth ${depth}\
-  --feat_root ${feat_root_path}
+  --feat_root ${feat_root_path} --mamba_type ${mamba_type}
 

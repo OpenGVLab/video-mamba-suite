@@ -210,6 +210,7 @@ class BaseOptions(object):
         parser.add_argument('--use_mamba', action='store_true')
         parser.add_argument("--depth", type=int, default=6)
         parser.add_argument("--feat_root", type=str, default='feature root path')
+        parser.add_argument("--mamba_type", type=str, default='DBM')
         self.parser = parser
 
     def display_save(self, opt):

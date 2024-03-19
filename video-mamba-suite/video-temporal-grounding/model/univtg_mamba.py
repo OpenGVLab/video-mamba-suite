@@ -195,7 +195,7 @@ class Model(nn.Module):
                  input_dropout=0.0, aux_loss=False,drop_path_rate=0.1,embed_dim=1024,drop_path=0.,
                  max_v_l=75, span_loss_type="l1", use_txt_pos=False, n_input_proj=2,use_mamba=False,device=None,dtype=None,
                 depth=6,rms_norm=False,residual_in_fp32=True,fused_add_norm=True,final_pool_type='mean',
-                if_rope=False,if_rope_residual=False,bimamba_type="v2",**kwargs):
+                if_rope=False,if_rope_residual=False,bimamba_type="v2",mamba_type="vim",**kwargs):
         """ Initializes the model.
         Parameters:
             transformer: torch module of the transformer architecture. See transformer.py
@@ -250,6 +250,7 @@ class Model(nn.Module):
                         layer_idx=i,
                         bimamba_type=bimamba_type,
                         drop_path=inter_dpr[i],
+                        mamba_type=mamba_type,
                         **factory_kwargs,
                     )
                     for i in range(depth)
@@ -661,7 +662,8 @@ def build_model(args):
         final_pool_type='mean',
         if_rope=False,
         if_rope_residual=False,
-        bimamba_type="v2"
+        bimamba_type="v2",
+        mamba_type=args.mamba_type
     )
 
     matcher = build_matcher(args)
