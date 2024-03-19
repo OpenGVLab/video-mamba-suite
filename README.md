@@ -29,6 +29,33 @@ We hope this work could provide valuable data points and insights for future res
 (2024/03/12) 🔄The repository is created.
 
 
+
+## Preliminary Installation
+
+1. Install the preliminary requirements.
+
+```bash
+# create environment
+conda create -n video-mamba-suite python=3.9
+pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu118
+
+# install requirements
+conda activate video-mamba-suite
+pip install requirement.txt
+
+# install mamba
+cd causal-conv1d
+python setup.py develop
+cd ..
+cd mamba
+python setup.py develop
+cd ..
+```
+
+2. For each tasks, enter their folders to follow installation instructions.
+
+3. If `requirement.txt` is missing some libraries, please propose an issue as soon as possible.
+
 ### Mamba for Video Temporal Modeling
 
 #### Supported tasks:
@@ -81,31 +108,38 @@ Supported tasks:
 
 ### Related dataset resources:
 
-[THUMOS-14]()
 
-[ActivityNet]()
+| |  | | | |
+|:----:|:-----:|:----------------:|:-------:|:-------:|
+|[THUMOS-14]() | [ActivityNet]() | [HACS Segment]() | [FineAction]() | [GTEA]() |
+|[YouCook2]() | [Breakfast]() | [FineAction]() | [Epic-kitchen-100]() | [Ego4D]() |
+|[EgoSchema]() | [QvHighlight]() | [Charade-STA]() |  |  |
 
-[HACS Segment]()
 
-[FineAction]()
 
-[GTEA]()
 
-[YouCook2]()
 
-[Breakfast]()
 
-[FineAction]()
 
-[Epic-kitchen-100]()
 
-[Ego4D]()
 
-[EgoSchema]()
 
-[QvHighlight]()
 
-[Charade-STA]()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## Cite
