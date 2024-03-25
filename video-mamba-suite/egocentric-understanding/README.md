@@ -1,11 +1,4 @@
-# :airplane: avion
-AVION is short for A VIdeo model in ONe day. AVION (meaning plane in French and Spanish) is fast.
-
-
-[**Training a Large Video Model on a Single Machine in a Day**](http://arxiv.org/abs/2309.16669)  
-Yue Zhao, Philipp Kr&auml;henb&uuml;hl  
-UT Austin  
-[arxiv](http://arxiv.org/abs/2309.16669) | [bibtex](#citing-avion) 
+# # Video Mamba Suite: Egocentric Understanding
 
 
 ## Installation
@@ -15,76 +8,49 @@ See [INSTALL.md](docs/INSTALL.md) to install this code.
 
 ## Main results
 
-1. AVION enables video-language contrastive pre-training on Ego4D (original narratives) **on a single node of 8× consumer-grade GPUs within a day**.
+### 1. Zero-shot Multi-instance Retrieval
 
-    | Method | Backbone | batch-size<br>per GPU | GPU memory | Hardware | GPU×hour^ | EK100 MIR<br>0-shot Avg. mAP | 
-    | :----: | :------: | :-------------------: | :--------: | :------: | :-------: | :--------------------------: |
-    | EgoVLP |   TSF-B  |          16           |     22     | 32× A100 |   1536    |            22.1              |
-    |  Ours  |   ViT-B  |         256           |     19     | 8× A5000 |    130    |            27.4              |
 
-    ^The reported GPU×hour is *not* normalized for GPU generations. The cost for EgoVLP is obtained from the [original paper](https://arxiv.org/abs/2206.01670) (Sec 6.1).
+#### 1.1 Video Temporal Adapter
 
-2. AVION speeds up LLM-augmented video-language contrastive pre-training (LaViLa) on Ego4D.
+| Method                |  V2T mAP |  T2V mAP |  Avg mAP | V2T nDCG | T2V nDCG | Avg nDCG |
+|-----------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
+| TimeSformer (Vanilla) |   29.2   |   21.8   |   25.5   |   30.1   |   27.1   |   28.6   |
+| TimeSformer (Frozen)  |   29.8   |   22.2   |   26.0   |   30.6   |   27.5   |   29.0   |
+| TimeMamba (Vanilla)   |   30.3   |   22.1   |   26.2   |   30.9   |   27.5   |   29.2   |
+| TimeMamba (Frozen)    | **30.7** | **22.8** | **26.8** | **31.3** | **27.8** | **29.5** |
 
-    a. Pretraining cost and performance.
+#### 1.2 Spatial-Temporal Modeling
 
-    | Method | Backbone | batch-size<br>per GPU | GPU memory | Hardware | GPU×hour^ | EK100 MIR<br>0-shot Avg. mAP |
-    | :----: | :------: | :-------------------: | :--------: | :------: | :-------: | :--------------------------: |
-    | LaViLa |   TSF-B  |          32           |     25     | 32× V100 |   1824    |            30.9              |
-    |  Ours  |   ViT-B  |         256           |     19     | 8× A5000 |    260    |            33.2              |
+| Method  | #F |  V2T mAP  |  T2V mAP  |  Avg mAP  |  V2T nDCG |  T2V nDCG |  Avg nDCG |
+|---------|----|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
+| ViT-T   | 4  |   15.50   |   11.10   |   13.30   |   22.48   |   19.66   |   21.07   |
+| ViT-B   | 4  |   25.08   |   18.49   |   21.79   |   27.80   |   24.87   |   26.34   |
+| ViT-T   | 16 |   20.47   |   15.29   |   17.88   |   25.74   |   22.89   |   24.31   |
+| ViT-S   | 16 |   23.80   |   17.60   |   20.70   |   27.40   |   24.40   |   25.90   |
+| ViViM-T | 16 |   23.31   |   17.21   |   20.26   |   27.40   |   24.30   |   25.80   |
+| ViViM-S | 16 | **26.00** | **19.60** | **22.80** | **28.20** | **25.30** | **26.70** |
 
-    ^The reported GPU×hour is *not* normalized for GPU generations.
 
-    b. Downstream performance.
+### 2. Finetuned Multi-instance Retrieval
 
-    | Method | Backbone | EK100 MIR<br>Avg. mAP | EK100 MIR<br>Avg. nDCG | EK100 CLS<br>Action Top-1 |
-    | :----: | :------: | :-------------------: | :--------------------: | :-----------------------: |
-    | LaViLa |  TSF-B   |          50.5         |          65.0          |          46.9             |
-    |  Ours  |  ViT-B   |          51.7         |          66.8          |          49.5             |
-    | LaViLa |  TSF-L   |          50.9         |          66.5          |          51.0             |
-    |  Ours  |  ViT-L   |          54.5         |          69.0          |          54.5             |
+| Method                |  V2T mAP |  T2V mAP |  Avg mAP | V2T nDCG | T2V nDCG | Avg nDCG |
+|-----------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
+| TimeSformer (Vanilla) |   49.1  |   39.3   |   44.2   |   60.0   |   57.6   |   58.8   |
+| TimeMamba (Vanilla)   |   **50.3**   |   **40.3**   |   **45.3**   |   **62.4**   |   **59.2**   |   **60.9**   |
 
-    :trophy: LaViLa+AVION helps us win [CVPR 2023 EPIC-Kitchens Challenges](https://epic-kitchens.github.io/2023#results) in both Action Recognition and Multi-Instance Retrieval Tasks by a significant margin.
+### 3. Finetuned Action Recognition
+| Method                | Verb Top1 | Noun Top1 | Action Top1 | Action Top5 |
+|-----------------------|:---------:|:---------:|:-----------:|:-----------:|
+| TimeSformer (Vanilla) |    63.8   |    52.4   |     41.3    |     60.4    |
+| TimeMamba (Vanilla)   |  **66.6** |  **53.3** |   **42.8**  |   **63.2**  |
 
-3. AVION speeds up VideoMAE pre-training.
-
-    |  Method  | Backbone | Epochs | GPU×hour^^ | top-1/top-5 (w/. FT) |
-    | :------: | :------: | :----: | :--------: | :------------------: |
-    | VideoMAE |  ViT-B   |  800   |    995     |      80.0/94.4       |
-    |   Ours   |  ViT-B   |  800   |    583     |      80.1/94.5       |
-
-    ^^Both GPU×hour are measured on the same hardware environment (4× A5000 GPU).
 
 For more details, please refer to [MODEL_ZOO](./docs/MODEL_ZOO.md).
 
-## License
 
-[MIT License](./LICENSE).
+## Acknowledgement
 
+The codebase is based on [AVION](https://github.com/zhaoyue-zephyrus/AVION).
+We thanks the authors for their efforts.
 
-## Acknowledgements
-
-* The vision-language contrastive pretraining part is refactored from [LaViLa](https://github.com/facebookresearch/LaViLa).
-* The MAE-style self-supervised pre-training part is built upon [VideoMAE](https://github.com/MCG-NJU/VideoMAE/).
-
-
-
-## Citing AVION
-
-```bibtex
-@article{zhao2023training,
-  title={Training a large video model on a single machine in a day},
-  author={Zhao, Yue and Kr{\"a}henb{\"u}hl, Philipp},
-  journal={arXiv preprint arXiv:2309.16669},
-  year={2023}
-}
-```
-
-```bibtex
-@inproceedings{zhao2023lavila,
-  title={Learning Video Representations from Large Language Models},
-  author={Zhao, Yue and Misra, Ishan and Kr{\"a}henb{\"u}hl, Philipp and Girdhar, Rohit},
-  booktitle={CVPR},
-  year={2023}
-}
-```

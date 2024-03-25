@@ -18,11 +18,10 @@ We categorize Mamba into four roles for modeling videos, deriving a **Video Mamb
 We hope this work could provide valuable data points and insights for future research on video understanding.
 
 
-## 📢 NOTICE
-**The code is being sorted out and will be released gradually in the next few days.**
 
 ## 📢 News
 
+(2024/03/21) The code of related tasks for `Video Temporal Modeling` and `Cross-modal Interaction` has been released. If there exist bug or missing packages, please submit a new issue to tell me.
 
 (2024/03/15) 🔄The repository is public.
 
@@ -86,11 +85,11 @@ Supported tasks:
 
 Supported tasks:
 
-[Multi-instance Retrieval]()
+[Multi-instance Retrieval](./video-mamba-suite/egocentric-understanding/)
 
-[Action Recognition]()
+[Action Recognition](./video-mamba-suite/egocentric-understanding/)
 
-[Long-form Video Question-Answer]()
+[Long-form Video Question-Answer](./video-mamba-suite/egocentric-understanding/)
 
 
 
@@ -99,11 +98,11 @@ Supported tasks:
 
 Supported tasks:
 
-[Multi-instance Retrieval]()
+[Multi-instance Retrieval](./video-mamba-suite/egocentric-understanding/)
 
-[Action Recognition]()
+[Action Recognition](./video-mamba-suite/egocentric-understanding/)
 
-[Long-form Video Question-Answer]()
+[Long-form Video Question-Answer](./video-mamba-suite/egocentric-understanding/)
 
 
 ### Related dataset resources:
@@ -114,31 +113,6 @@ Supported tasks:
 |[THUMOS-14]() | [ActivityNet]() | [HACS Segment]() | [FineAction]() | [GTEA]() |
 |[YouCook2]() | [Breakfast]() | [FineAction]() | [Epic-kitchen-100]() | [Ego4D]() |
 |[EgoSchema]() | [QvHighlight]() | [Charade-STA]() |  |  |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

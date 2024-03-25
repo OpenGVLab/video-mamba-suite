@@ -1,20 +1,11 @@
 # Installation
 
-## Clone the repo
-
-Clone the repo recursively. Note that it is important to add the `--recursive` option.
-```bash
-git clone --recursive git@github.com:zhaoyue-zephyrus/avion.git
-```
 
 ## Requirements
 The repo has been developed on a Ubuntu (22.04) system with 8x NVIDIA RTX A5000 (24GB) GPUs. We use CUDA 11.7 and pytorch 1.13.1.
 
 ## Example conda environment setup
 ```bash
-conda create --name avion python=3.10 -y
-conda activate avion
-pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu117
 pip install ninja==1.11.1  # install ninja first for building flash-attention
 CUDA_HOME=$CUDA_HOME pip install -r requirements.txt
 ```
@@ -24,7 +15,7 @@ We build the Fused DecodeCrop operator on top of [dmlc/decord](https://github.co
 
 (1) Build the shared library
 ```bash
-cd third_party/decord/
+cd third_party/decord/ # maybe decord-dev
 mkdir build && cd build
 cmake .. -DUSE_CUDA=0 -DCMAKE_BUILD_TYPE=Release
 make

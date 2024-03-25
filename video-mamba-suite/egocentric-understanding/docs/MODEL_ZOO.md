@@ -1,116 +1,40 @@
 # Model Zoo
 
-## Pre-training LaViLa
+**Waiting for upload**
 
-### 
-<details><summary> Train a baseline dual-encoder with ViT-B </summary>
-
-```bash
-mkdir $EXP_PATH
-PYTHONPATH=.:third_party/decord/python/ torchrun \
-    --nproc_per_node=8 \
-    scripts/main_lavila_pretrain.py \
-    --root /new-pool/Datasets/Ego4d/v1/videos_288px_15sec/ \
-    --root-val datasets/EK100/EK100_320p_15sec_30fps_libx264/ \
-    --use-flash-attn \
-    --grad-checkpointing \
-    --use-fast-conv1 \
-    --batch-size 256 \
-    --freeze-temperature \
-    --fused-decode-crop \
-    --fix-lr \
-    --output-dir $EXP_PATH 2>&1 | tee $EXP_PATH/log.txt
-```
-
-</details>
-
-<details><summary> Train an LM-augmented dual-encoder (LaViLa) with ViT-B </summary>
-
-```bash
-mkdir $EXP_PATH
-PYTHONPATH=.:third_party/decord/python/ torchrun \
-    --nproc_per_node=8 \
-    scripts/main_lavila_pretrain.py \
-    --root /new-pool/Datasets/Ego4d/v1/videos_288px_15sec/ \
-    --root-val datasets/EK100/EK100_320p_15sec_30fps_libx264/ \
-    --train-metadata datasets/Ego4D/ego4d_train.rephraser.no_punkt_top3.pkl \
-    --train-metadata-aux datasets/Ego4D/ego4d_train.narrator_63690737.return_10.pkl \
-    --use-flash-attn \
-    --grad-checkpointing \
-    --use-fast-conv1 \
-    --batch-size 256 \
-    --freeze-temperature \
-    --fused-decode-crop \
-    --fix-lr \
-    --output-dir $EXP_PATH 2>&1 | tee $EXP_PATH/log.txt
-```
-
-</details>
-
-|  Corpus  | LLM-aug. | Corpus size | Backbone | per-gpu<br>batch-size | GPU×hour^ | EK-100 MIR<br>avg. mAP | EK-100 MIR<br>avg. nDCG |                                checkpoint                               | md5sum |
-| :------: | :------: | :---------: | :------: | :----------------: | :-------: | :--------------------: | :---------------------: | :---------------------------------------------------------------------: | :----: |
-|  Ego4D   |    no    |   4.0M      |  ViT-B   |       256          |  ~130    |       27.5/28.4        |       29.1/29.5         | [best Epoch](https://utexas.box.com/s/yp1krj3dsmr8wj0sz01t10bwa9fgq3zy) | fc3b7f |
-|  Ego4D   |    yes   |    35M      |  ViT-B   |       256          |   ~260    |       31.1/32.9        |       31.9/32.7         | [best Epoch](https://utexas.box.com/s/e681nrxivc9makufvrumrfuaopk57h4n) | 91a90b |
-|  Ego4D   |    yes   |    35M      |  ViT-L   |       112          |   ~680    |       36.4/37.6        |       35.1/35.3         | [best Epoch](https://utexas.box.com/s/1iatmrs7ufdeooce09a61t1n6wsouf4l) | f377f6 |
+### 1. Zero-shot Multi-instance Retrieval
 
 
+#### 1.1 Video Temporal Adapter
 
-^ Hardware configuration: 8x NVIDIA A5000 (24GB) GPUs + 2x Intel Xeon Gold 5220(R) 24-Core CPU @ 2.20GHz (96 threads in total).
+| Method                |  V2T mAP |  T2V mAP |  Avg mAP | V2T nDCG | T2V nDCG | Avg nDCG |
+|-----------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
+| TimeSformer (Vanilla) |   29.2   |   21.8   |   25.5   |   30.1   |   27.1   |   28.6   |
+| TimeSformer (Frozen)  |   29.8   |   22.2   |   26.0   |   30.6   |   27.5   |   29.0   |
+| TimeMamba (Vanilla)   |   30.3   |   22.1   |   26.2   |   30.9   |   27.5   |   29.2   |
+| TimeMamba (Frozen)    | **30.7** | **22.8** | **26.8** | **31.3** | **27.8** | **29.5** |
 
-## Fine-tuning the video-language dual-encoder on down-stream tasks
+#### 1.2 Spatial-Temporal Modeling
 
-### EK-100 Multi-Instance Retrieval (MIR)
-
-<details><summary> Finetune a pretrained dual-encoder on EK-100 MIR </summary>
-
-```bash
-mkdir $EXP_PATH
-PYTHONPATH=.:third_party/decord/python/ torchrun \
-    --nproc_per_node=8 scripts/main_lavila_finetune_mir.py \
-    --root datasets/EK100/EK100_320p_15sec_30fps_libx264/ \
-    --video-chunk-length 15 --use-flash-attn \
-    --grad-checkpointing \
-    --use-fast-conv1 \
-    --batch-size 64 \
-    --fused-decode-crop \
-    --use-multi-epochs-loader \
-    --pretrain-model experiments/pretrain_lavila_vitb/checkpoint_best.pt \
-    --output-dir $EXP_PATH 2>&1 | tee $EXP_PATH/log.txt
-```
-
-</details>
+| Method  | #F |  V2T mAP  |  T2V mAP  |  Avg mAP  |  V2T nDCG |  T2V nDCG |  Avg nDCG |
+|---------|----|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
+| ViT-T   | 4  |   15.50   |   11.10   |   13.30   |   22.48   |   19.66   |   21.07   |
+| ViT-B   | 4  |   25.08   |   18.49   |   21.79   |   27.80   |   24.87   |   26.34   |
+| ViT-T   | 16 |   20.47   |   15.29   |   17.88   |   25.74   |   22.89   |   24.31   |
+| ViT-S   | 16 |   23.80   |   17.60   |   20.70   |   27.40   |   24.40   |   25.90   |
+| ViViM-T | 16 |   23.31   |   17.21   |   20.26   |   27.40   |   24.30   |   25.80   |
+| ViViM-S | 16 | **26.00** | **19.60** | **22.80** | **28.20** | **25.30** | **26.70** |
 
 
-| LLM-aug. | Backbone | V->T mAP | T->V mAP | avg mAP | V->T nDCG | T->V nDCG | avg nDCG |                               checkpoint                                | md5sum |
-| :------: | :------: | :------: | :------: | :-----: | :-------: | :-------: | :------: | :---------------------------------------------------------------------: | :----: |
-|   yes    |   ViT-B  |   55.7   |   48.2   |  52.0   |   67.8    |   65.3    |   66.5   | [best epoch](https://utexas.box.com/s/ke5kwfixttb4t7uxdbs9gmiiuu1582dg) | e099c0 |
-|   yes    |   ViT-L  |   57.9   |   51.1   |  54.5   |   70.4    |   67.6    |   69.0   | [best epoch](https://utexas.box.com/s/m7f65hg9eonz34g0l2x5r0t92ouh0u4w) | f82079 |
+### 2. Finetuned Multi-instance Retrieval
 
+| Method                |  V2T mAP |  T2V mAP |  Avg mAP | V2T nDCG | T2V nDCG | Avg nDCG |
+|-----------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
+| TimeSformer (Vanilla) |   49.1  |   39.3   |   44.2   |   60.0   |   57.6   |   58.8   |
+| TimeMamba (Vanilla)   |   **50.3**   |   **40.3**   |   **45.3**   |   **62.4**   |   **59.2**   |   **60.9**   |
 
-### EK-100 Action Recognition (CLS)
-
-
-<details><summary> Finetune a pretrained dual-encoder on EK-100 CLS </summary>
-
-```bash
-mkdir $EXP_PATH
-PYTHONPATH=.:third_party/decord/python/ torchrun \
-    --nproc_per_node=8 scripts/main_lavila_finetune_mir.py \
-    --root datasets/EK100/EK100_320p_15sec_30fps_libx264/ \
-    --video-chunk-length 15 --use-flash-attn \
-    --grad-checkpointing \
-    --use-fast-conv1 \
-    --batch-size 64 \
-    --fused-decode-crop \
-    --use-multi-epochs-loader \
-    --pretrain-model experiments/pretrain_lavila_vitb/checkpoint_best.pt \
-    --output-dir $EXP_PATH 2>&1 | tee $EXP_PATH/log.txt
-```
-
-</details>
-
-| LLM-aug. | Backbone | Verb Top1 | Noun Top1 | Action Top1 |                                checkpoint                               | md5sum |
-| :------: | :------: | :-------: | :-------: | :---------: | :---------------------------------------------------------------------: | :----: |
-|   no     |   ViT-B  |   67.9    |   57.6    |    47.3     | [best epoch](https://utexas.box.com/s/2fkvtc67m0f82wmm5cnqfo7wg951lobv) | b40f3e |
-|   yes    |   ViT-B  |   70.0    |   59.4    |    49.5     | [best epoch](https://utexas.box.com/s/8iokob6ahb94gp1bqbmauhpeunqwx79j) | 6c3c5e |
-|   yes    |   ViT-L  |   73.0    |   65.4    |    54.4     | [best epoch](https://utexas.box.com/s/crnqo9bu0owtfz4yc1yqf8hz6g0ze39b) | 1871f4 |
+### 3. Finetuned Action Recognition
+| Method                | Verb Top1 | Noun Top1 | Action Top1 | Action Top5 |
+|-----------------------|:---------:|:---------:|:-----------:|:-----------:|
+| TimeSformer (Vanilla) |    63.8   |    52.4   |     41.3    |     60.4    |
+| TimeMamba (Vanilla)   |  **66.6** |  **53.3** |   **42.8**  |   **63.2**  |
