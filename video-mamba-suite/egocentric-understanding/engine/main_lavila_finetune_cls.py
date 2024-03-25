@@ -211,7 +211,6 @@ def main(args):
     optim_params = [{"params": p_wd, "weight_decay": args.wd},
                     {"params": p_non_wd, "weight_decay": 0}]
 
-
     total_batch_size = args.batch_size * dist_utils.get_world_size()
     args.lr = args.lr * total_batch_size / 128
     args.lr_start = args.lr_start * total_batch_size / 128

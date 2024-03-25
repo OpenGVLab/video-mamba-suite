@@ -168,7 +168,6 @@ def main(args):
         else:
             n_wd.append(n)
             p_wd.append(p)
-
     # print('parameters without wd:', n_non_wd)
     # print('parameters with wd:', n_wd)
     optim_params = [{"params": p_wd, "weight_decay": args.wd},
