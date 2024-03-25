@@ -158,6 +158,12 @@ cython_debug/
 # TAL
 ckpt_*/
 
+# ego
+
+**/work_dirs/
+**/datasets/Ego4D/
+**/datasets/EK100/
+
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore

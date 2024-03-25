@@ -1,0 +1,10 @@
+einops
+flash-attn
+kornia
+pandas
+pytorchvideo==0.1.5
+scikit-learn==1.2.2
+submitit==1.4.5
+timm==0.6.12
+transformers==4.26.1
+git+https://github.com/openai/CLIP.git
