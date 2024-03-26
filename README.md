@@ -34,12 +34,17 @@ We hope this work could provide valuable data points and insights for future res
 1. Install the preliminary requirements.
 
 ```bash
+# clone video-mamba-suite
+git clone --recursive https://github.com/OpenGVLab/video-mamba-suite.git
+
 # create environment
 conda create -n video-mamba-suite python=3.9
+conda activate video-mamba-suite
+
+# install pytorch
 pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu118
 
 # install requirements
-conda activate video-mamba-suite
 pip install requirement.txt
 
 # install mamba
