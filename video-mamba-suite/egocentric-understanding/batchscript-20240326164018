@@ -1,0 +1,49 @@
+#!/bin/bash
+#SBATCH --cpus-per-task 16
+#SBATCH --jobid 12457201
+#SBATCH --job-name interactive
+#SBATCH --nodes 1
+#SBATCH --partition --job-name=
+#SBATCH --gres gpu:8
+#SBATCH --ntasks 8
+#SBATCH --ntasks-per-node 8
+#SBATCH --cpus-per-task 1
+#SBATCH --quotatype spot
+#SBATCH --output ./work_dirs/finetune_mir_baseline_vitb_bs512/slurm.log
+# args: -p
+# args: --job-name=
+# args: --gres=gpu:8
+# args: --ntasks=8
+# args: --ntasks-per-node=8
+# args: --cpus-per-task=1
+# args: --kill-on-bad-exit=1
+# args: --quotatype=spot
+# args: python
+# args: -u
+# args: engine/main_lavila_finetune_mir.py
+# args: --root
+# args: s-in-hdd:s3://videos/epic/videos_short320_chunked_15s/
+# args: --output-dir
+# args: ./work_dirs/finetune_mir_baseline_vitb_bs512
+# args: --video-chunk-length
+# args: 15
+# args: --clip-length
+# args: 16
+# args: --clip-stride
+# args: 4
+# args: --batch-size
+# args: 64
+# args: --use-flash-attn
+# args: --use-fast-conv1
+# args: --fused-decode-crop
+# args: --use-multi-epochs-loader
+# args: --pretrain-model
+# args: /mnt/lustre/chenguo/petrelfs/workspace/LongAVION/work_dirs/lavila_pretrain_baseline_vitb_bs512/checkpoint_best.pt
+argv=()
+while read -r line; do
+    if [[ $line == "# args: "* ]]; then
+        argv[${#argv[*]}]="${line:8}"
+    fi
+done < $0
+
+srun "${argv[@]}"

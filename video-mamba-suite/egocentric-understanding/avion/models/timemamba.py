@@ -99,7 +99,7 @@ class SpaceTimeBlock(nn.Module):
 
     def __init__(self, dim, num_heads, mlp_ratio=4., qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
                  drop_path=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm, time_init='zeros',
-                 attention_style='frozen-in-time', is_tanh_gating=False, use_flash_attn=False, use_light_mamba=False):
+                 attention_style='frozen-in-time', is_tanh_gating=False, use_flash_attn=False):
         super().__init__()
 
 
@@ -111,11 +111,7 @@ class SpaceTimeBlock(nn.Module):
         else:
             self.attn = FlashMHA(dim, num_heads, cross_attn=False, qkv_proj_bias=True,
                                  out_proj_bias=True, dropout=attn_drop, use_flash_attn=True)
-        if use_light_mamba:
-            from mamba_ssm.modules.mamba_new import Mamba as MambaNew
-            self.time_mamba = MambaNew(dim, expand=1)
-        else:
-            self.time_mamba = Mamba(dim, d_conv=4, bimamba_type="v2", use_fast_path=True, expand=1)
+        self.time_mamba = Mamba(dim, d_conv=4, bimamba_type="v2", use_fast_path=True, expand=1)
 
         if is_tanh_gating:
             self.alpha_timeattn = nn.Parameter(torch.zeros([]))
@@ -197,7 +193,7 @@ class TimeMamba(nn.Module):
                  num_heads=12, mlp_ratio=4., qkv_bias=True, qk_scale=None, representation_size=None,
                  drop_rate=0., attn_drop_rate=0., drop_path_rate=0., hybrid_backbone=None, norm_layer=None,
                  num_frames=8, time_init='rand', attention_style='frozen-in-time', ln_pre=False,
-                 act_layer=nn.GELU, is_tanh_gating=False, use_flash_attn=False, use_light_mamba=False, output_dim=512):
+                 act_layer=nn.GELU, is_tanh_gating=False, use_flash_attn=False, output_dim=512):
         """
         Args:
             img_size (int, tuple): input image size
@@ -222,6 +218,7 @@ class TimeMamba(nn.Module):
             attention_style: (str) how to attend to space and time.
         """
         super().__init__()
+        self.grad_checkpointing = False
         self.num_classes = num_classes
         self.num_features = self.embed_dim = embed_dim  # num_features for consistency with other models
         self.num_frames = num_frames
@@ -257,7 +254,7 @@ class TimeMamba(nn.Module):
                 dim=embed_dim, num_heads=num_heads, mlp_ratio=mlp_ratio, qkv_bias=qkv_bias, qk_scale=qk_scale,
                 drop=drop_rate, attn_drop=attn_drop_rate, drop_path=dpr[i], norm_layer=norm_layer, time_init=time_init,
                 attention_style=attention_style, act_layer=act_layer, is_tanh_gating=is_tanh_gating, 
-                use_flash_attn=use_flash_attn, use_light_mamba=use_light_mamba)
+                use_flash_attn=use_flash_attn)
             for i in range(depth)])
         self.norm = norm_layer(embed_dim)
 
@@ -293,6 +290,10 @@ class TimeMamba(nn.Module):
             nn.init.constant_(m.weight, 1.0)
 
     @torch.jit.ignore
+    def set_grad_checkpointing(self, enable=True):
+        self.grad_checkpointing = enable
+
+    @torch.jit.ignore
     def no_weight_decay(self):
         return {'pos_embed', 'cls_token'}
 
@@ -323,7 +324,7 @@ class TimeMamba(nn.Module):
                 pass
         print("Freeze the pretrained parts in vision model: {}".format(freeze_list))
 
-    def forward_features(self, x, use_checkpoint=False, cls_at_last=True):
+    def forward_features(self, x, cls_at_last=True):
         # print(x.shape)
         B, curr_frames, channels, _, _ = x.shape
         x, T, W = self.patch_embed(x)
@@ -362,7 +363,7 @@ class TimeMamba(nn.Module):
         n = self.patches_per_frame
         f = curr_frames
         for blk in self.blocks:
-            if use_checkpoint:
+            if self.grad_checkpointing:
                 x = checkpoint.checkpoint(blk, x, n, f)
             else:
                 x = blk(x, time_n=n, space_f=f)
@@ -374,11 +375,11 @@ class TimeMamba(nn.Module):
         else:
             return self.norm(x)
 
-    def forward(self, x, use_checkpoint=False):
+    def forward(self, x):
         # Note:  B C T H W => B T C H W
         # The default input order is different from the one in Frozen-in-Time
         x = x.permute(0, 2, 1, 3, 4).contiguous()
-        x = self.forward_features(x, use_checkpoint=use_checkpoint)
+        x = self.forward_features(x)
         
         if self.image_projection is not None:
             x = x @ self.image_projection

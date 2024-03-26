@@ -19,6 +19,7 @@ from avion.data.clip_dataset import VideoCaptionDatasetCLIP
 from avion.data.tokenizer import tokenize
 from avion.data.transforms import Permute
 
+from avion.utils.train_utils import init_dist_slurm
 from avion.losses.losses import MaxMarginRankingLoss
 import avion.models.model_clip as model_clip
 from avion.models.utils import inflate_positional_embeds
@@ -85,7 +86,7 @@ def get_args_parser():
     parser.add_argument('--wd', default=0.01, type=float)
     parser.add_argument('--betas', default=(0.9, 0.999), nargs=2, type=float)
     parser.add_argument('--eps', default=1e-8, type=float)
-    parser.add_argument('--eval-freq', default=5, type=int)
+    parser.add_argument('--eval-freq', default=1, type=int)
     parser.add_argument('--disable-amp', action='store_true', help='disable mixed-precision training (requires more memory and compute)')
     parser.add_argument('--grad-clip-norm', default=None, type=float)
     # system
@@ -107,7 +108,7 @@ def get_args_parser():
 
 
 def main(args):
-    dist_utils.init_distributed_mode(args)
+    init_dist_slurm(args)
     dist_utils.random_seed(args.seed, dist_utils.get_rank())
 
     if args.pretrain_model:
@@ -397,6 +398,8 @@ def train(train_loader, transform_gpu, model, criterion, optimizer, scaler, epoc
             if lr_schedule is not None:
                 param_group['lr'] = lr_schedule[it]
 
+        uids = inputs[0]
+        inputs = inputs[1:]
         inputs = [tensor.cuda(args.gpu, non_blocking=True) for tensor in inputs]
         relevancies = inputs.pop()  # loader will a "relevancy" variable; we need it for ek100_mir
         optimizer.zero_grad()
@@ -506,6 +509,8 @@ def validate_mir(val_loader, transform_gpu, model, criterion, args):
                 # measure data loading time
                 data_time.update(time.time() - end)
 
+                uids = inputs[0]
+                inputs = inputs[1:]
                 inputs = [tensor.cuda(args.gpu, non_blocking=True) for tensor in inputs]
                 relevancies = inputs.pop()
 

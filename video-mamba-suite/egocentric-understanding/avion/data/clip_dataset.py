@@ -230,7 +230,7 @@ class VideoCaptionDatasetBase(torch.utils.data.Dataset):
                 if positive_list != []:
                     pos = random.sample(positive_list, min(len(positive_list), 1))[0]
                     if pos < len(self.metadata_sentence) and pos < self.relevancy_mat.shape[1]:
-                        return frames, (self.metadata_sentence.iloc[pos][1], self.relevancy_mat[i][pos])
+                        return vid_path, frames, (self.metadata_sentence.iloc[pos][1], self.relevancy_mat[i][pos])
             else:
                 return vid_path, frames, (narration, 1)
         elif self.dataset == 'ek100_cls':
