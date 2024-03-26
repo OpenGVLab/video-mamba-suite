@@ -25,6 +25,8 @@
 
 #### 1.1 Video Temporal Adapter
 
+
+
 | Method                |  V2T mAP |  T2V mAP |  Avg mAP | V2T nDCG | T2V nDCG | Avg nDCG | Train shell | Infer shell |
 |-----------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
 | TimeSformer (Vanilla) |   29.2   |   21.8   |   25.5   |   30.1   |   27.1   |   28.6   | [train.sh](../scripts/pretrain/run_slurm_pretrain_bs512_timesformer.sh) | [infer.sh](../scripts/mir_zs/run_slurm_lavila_pretrain_bs512_timesformer_infer_mir_f4.sh) |
@@ -34,14 +36,14 @@
 
 #### 1.2 Spatial-Temporal Modeling
 
-| Method  | #F |  V2T mAP  |  T2V mAP  |  Avg mAP  |  V2T nDCG |  T2V nDCG |  Avg nDCG |
-|---------|----|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
+| Method  | #F |  V2T mAP  |  T2V mAP  |  Avg mAP  |  V2T nDCG |  T2V nDCG |  Avg nDCG |  Train shell | Infer shell |
+|---------|----|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
 | ViT-T   | 4  |   15.50   |   11.10   |   13.30   |   22.48   |   19.66   |   21.07   |
-| ViT-B   | 4  |   25.08   |   18.49   |   21.79   |   27.80   |   24.87   |   26.34   |
-| ViT-T   | 16 |   20.47   |   15.29   |   17.88   |   25.74   |   22.89   |   24.31   |
-| ViT-S   | 16 |   23.80   |   17.60   |   20.70   |   27.40   |   24.40   |   25.90   |
-| ViViM-T (Ours) | 16 |   23.31   |   17.21   |   20.26   |   27.40   |   24.30   |   25.80   |
-| ViViM-S (Ours) | 16 | **26.00** | **19.60** | **22.80** | **28.20** | **25.30** | **26.70** |
+| ViT-B   | 4  |   25.08   |   18.49   |   21.79   |   27.80   |   24.87   |   26.34   | 
+| ViT-T   | 16 |   20.47   |   15.29   |   17.88   |   25.74   |   22.89   |   24.31   | [train.sh](../scripts/pretrain/run_slurm_pretrain_bs512_deit_tiny_gpu8_f16.sh) | [infer.sh](../scripts/mir_zs/run_slurm_lavila_pretrain_bs512_vit_tiny_infer_mir_f16.sh) |
+| ViT-S   | 16 |   23.80   |   17.60   |   20.70   |   27.40   |   24.40   |   25.90   | [train.sh](../scripts/pretrain/run_slurm_pretrain_bs512_deit_small_gpu8_f16.sh) | [infer.sh](../scripts/mir_zs/run_slurm_lavila_pretrain_bs512_vit_small_infer_mir_f16.sh) |
+| ViViM-T (Ours) | 16 |   23.31   |   17.21   |   20.26   |   27.40   |   24.30   |   25.80   |[train.sh](../scripts/pretrain/run_slurm_pretrain_bs512_vivim_tiny_gpu8_f16.sh) | [infer.sh](../scripts/mir_zs/run_slurm_lavila_pretrain_bs512_vivim_tiny_infer_mir_f16.sh) |
+| ViViM-S (Ours) | 16 | **26.00** | **19.60** | **22.80** | **28.20** | **25.30** | **26.70** |[train.sh](../scripts/pretrain/run_slurm_pretrain_bs512_vivim_small_gpu8_f16.sh) | [infer.sh](../scripts/mir_zs/run_slurm_lavila_pretrain_bs512_vivim_small_infer_mir_f16.sh) |
 
 
 ### 2. Finetuned Multi-instance Retrieval

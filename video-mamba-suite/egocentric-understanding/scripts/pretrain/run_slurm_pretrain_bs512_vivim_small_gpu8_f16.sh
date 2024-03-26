@@ -32,7 +32,7 @@ srun -p ${PARTITION} \
     python -u engine/main_lavila_pretrain.py \
     --root  ${DATA_ROOT} \
     --root-val ${DATA_ROOT_VAL} \
-    --model CLIP_ViMamba_small \
+    --model CLIP_ViViM_small \
     --output-dir ${OUTPUT_DIR} \
     --video-chunk-length ${VIDEO_CHUNK_LENGTH} \
     --clip-length ${CLIP_LENGTH} \
