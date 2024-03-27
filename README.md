@@ -62,9 +62,9 @@ cd ..
 
 
 
-### Supported tasks:
+## Supported tasks
 
-#### Mamba for Video Temporal Modeling
+### Mamba for Video Temporal Modeling
 | task | supported datasets |
 |:----|:-------|
 |[Temporal Action Localization](./video-mamba-suite/temporal-action-localization/README.md) | ActivityNet, HACS Segment, FineAction, THUMOS-14 | 
@@ -74,7 +74,7 @@ cd ..
 |[Action Anticipation](./video-mamba-suite/action-anticipation/README.md) | Epic-kitchen-100 |
 
 
-#### Mamba for Cross-modal Interaction
+### Mamba for Cross-modal Interaction
 | task | supported datasets |
 |:----|:-------|
 |[Video Temporal Grounding](./video-mamba-suite/video-temporal-grounding/README.md) | QvHighlight, Charade-STA | 
@@ -82,7 +82,7 @@ cd ..
 
 
 
-#### Mamba as Video Temporal Adapter
+### Mamba as Video Temporal Adapter
 
 | task | supported datasets |
 |:----|:-------|
@@ -91,7 +91,7 @@ cd ..
 |[Long-form Video Question-Answer](./video-mamba-suite/egocentric-understanding/) | EgoSchema | 
 
 
-#### Mamba for Spatial-temporal Modeling
+### Mamba for Spatial-temporal Modeling
 
 | task | supported datasets |
 |:----|:-------|
@@ -100,15 +100,25 @@ cd ..
 
 
 
-<!-- ### Related dataset resources: -->
+## Model Zoo
+
+The models of [Mamba as Video Temporal Adapter](#mamba-as-video-temporal-adapter) and [Mamba for Spatial-temporal Modeling](#mamba-for-spatial-temporal-modeling).
 
 
-<!-- | |  | | | |
-|:----:|:-----:|:----------------:|:-------:|:-------:|
-|[THUMOS-14]() | [ActivityNet]() | [HACS Segment]() | [FineAction]() | [GTEA]() |
-|[YouCook2]() | [Breakfast]() | [FineAction]() | [Epic-kitchen-100]() | [Ego4D]() |
-|[EgoSchema]() | [QvHighlight]() | [Charade-STA]() |  |  | -->
-
+| Model                   | Pretrain-I | Pretrain-V | Finetuned | #Frame | Weight |
+|-------------------------|------------|------------|-----------|--------|--------|
+| TimeSformer-B (Vanilla) | CLIP-400M  | Ego4D-4M   | -         | 4      | 🤗 [HF link](https://huggingface.co/cg1177/video-mamba-suite/blob/main/clip_timesformer_vanilla_base_bs512_f4.pt)    |
+| TimeSformer-B (Frozen)  | CLIP-400M  | Ego4D-4M   | -         | 4      | 🤗 [HF link](https://huggingface.co/cg1177/video-mamba-suite/blob/main/clip_timesformer_frozen_base_bs512_f4.pt)       |
+| TimeMamba-B (Vanilla)   | CLIP-400M  | Ego4D-4M   | -         | 4      | 🤗 [HF link](https://huggingface.co/cg1177/video-mamba-suite/blob/main/clip_timemamba_vanilla_base_bs512_f4.pt)       |
+| TimeMamba-B (Frozen)    | CLIP-400M  | Ego4D-4M   | -         | 4      | 🤗 [HF link](https://huggingface.co/cg1177/video-mamba-suite/blob/main/clip_timemamba_frozen_base_bs512_f4.pt)      |
+| TimeSformer-B (Vanilla) | CLIP-400M  | Ego4D-4M   | EK100-MIR | 16     |        |
+| TimeSformer-B (Vanilla) | CLIP-400M  | Ego4D-4M   | EK100-MIR | 16     |        |
+| TimeMamba-B (Vanilla)   | CLIP-400M  | Ego4D-4M   | EK100-CLS | 16     |        |
+| TimeMamba-B (Vanilla)   | CLIP-400M  | Ego4D-4M   | EK100-CLS | 16     |        |
+| ViT-T                   | deit,IN1K  | Ego4D-4M   | -         | 16     | 🤗 [HF link](https://huggingface.co/cg1177/video-mamba-suite/blob/main/deit_vit_tiny_bs512_f16.pt)       |
+| ViT-S                   | deit,IN1K  | Ego4D-4M   | -         | 16     | 🤗 [HF link](https://huggingface.co/cg1177/video-mamba-suite/blob/main/deit_vit_small_bs512_f16.pt)       |
+| ViViM-T                 | deit,IN1K  | Ego4D-4M   | -         | 16     | 🤗 [HF link](https://huggingface.co/cg1177/video-mamba-suite/blob/main/deit_vivim_tiny_bs512_f16.pt)       |
+| ViViM-S                 | deit,IN1K  | Ego4D-4M   | -         | 16     | 🤗 [HF link](https://huggingface.co/cg1177/video-mamba-suite/blob/main/deit_vit_small_bs512_f16.pt)       |
 
 
 ## Cite
