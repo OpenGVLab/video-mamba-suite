@@ -21,7 +21,7 @@ We hope this work could provide valuable data points and insights for future res
 
 ## 📢 News
 
-(2024/03/21) The code of related tasks for `Video Temporal Modeling` and `Cross-modal Interaction` has been released. If there exist bug or missing packages, please submit a new issue to tell me.
+(2024/03/21) The code of related tasks for [Video Temporal Modeling](#mamba-for-video-temporal-modeling) and [Cross-modal Interaction](#mamba-for-cross-modal-interaction) has been released. If there exist bug or missing packages, please submit a new issue to tell me.
 
 (2024/03/15) 🔄The repository is public.
 
@@ -60,57 +60,47 @@ cd ..
 
 3. If `requirement.txt` is missing some libraries, please propose an issue as soon as possible.
 
-### Mamba for Video Temporal Modeling
-
-#### Supported tasks:
-[Temporal Action Localization](./video-mamba-suite/temporal-action-localization/README.md)
-
-[Temporal Action Segmentation](./video-mamba-suite/temporal-action-segmentation/README.MD)
-
-[Video dense captioning](./video-mamba-suite/video-dense-captioning/README.md)
-
-[Video paragraph captioning](./video-mamba-suite/video-dense-captioning/README.md)
-
-[Action Anticipation](./video-mamba-suite/action-anticipation/README.md)
 
 
+### Supported tasks:
+
+#### Mamba for Video Temporal Modeling
+| task | supported datasets |
+|:----|:-------|
+|[Temporal Action Localization](./video-mamba-suite/temporal-action-localization/README.md) | ActivityNet, HACS Segment, FineAction, THUMOS-14 | 
+|[Temporal Action Segmentation](./video-mamba-suite/temporal-action-segmentation/README.MD) | GTEA, Breakfast, 50salads | 
+|[Video dense captioning](./video-mamba-suite/video-dense-captioning/README.md) | ActivityNet, YouCook2 | 
+|[Video paragraph captioning](./video-mamba-suite/video-dense-captioning/README.md) | ActivityNet, YouCook2 | 
+|[Action Anticipation](./video-mamba-suite/action-anticipation/README.md) | Epic-kitchen-100 |
 
 
-### Mamba for Cross-modal Interaction
-
-Supported tasks:
-
-[Video Temporal Grounding](./video-mamba-suite/video-temporal-grounding/README.md)
-
-[Highlight Detection](./video-mamba-suite/video-temporal-grounding/README.md)
+#### Mamba for Cross-modal Interaction
+| task | supported datasets |
+|:----|:-------|
+|[Video Temporal Grounding](./video-mamba-suite/video-temporal-grounding/README.md) | QvHighlight, Charade-STA | 
+|[Highlight Detection](./video-mamba-suite/video-temporal-grounding/README.md) | QvHighlight | 
 
 
 
-### Mamba as Video Temporal Adapter
+#### Mamba as Video Temporal Adapter
 
-Supported tasks:
-
-[Multi-instance Retrieval](./video-mamba-suite/egocentric-understanding/)
-
-[Action Recognition](./video-mamba-suite/egocentric-understanding/)
-
-[Long-form Video Question-Answer](./video-mamba-suite/egocentric-understanding/)
+| task | supported datasets |
+|:----|:-------|
+|[Zero-shot/Finetuned Multi-instance Retrieval](./video-mamba-suite/egocentric-understanding/) | Epic-kitchen-100 | 
+|[Finetuned Action Recognition](./video-mamba-suite/egocentric-understanding/) | Epic-kitchen-100 | 
+|[Long-form Video Question-Answer](./video-mamba-suite/egocentric-understanding/) | EgoSchema | 
 
 
+#### Mamba for Spatial-temporal Modeling
+
+| task | supported datasets |
+|:----|:-------|
+|[Zero-shot/Finetuned Multi-instance Retrieval](./video-mamba-suite/egocentric-understanding/) | Epic-kitchen-100 | 
+|[Finetuned Action Recognition]() | Kinetics-400 | 
 
 
-### Mamba for Spatial-temporal Modeling
 
-Supported tasks:
-
-[Multi-instance Retrieval](./video-mamba-suite/egocentric-understanding/)
-
-[Action Recognition](./video-mamba-suite/egocentric-understanding/)
-
-[Long-form Video Question-Answer](./video-mamba-suite/egocentric-understanding/)
-
-
-### Related dataset resources:
+<!-- ### Related dataset resources: -->
 
 
 <!-- | |  | | | |
