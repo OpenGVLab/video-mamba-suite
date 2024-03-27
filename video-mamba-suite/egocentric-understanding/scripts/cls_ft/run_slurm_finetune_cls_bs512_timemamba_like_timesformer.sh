@@ -40,5 +40,6 @@ srun -p ${PARTITION} \
     --use-fast-conv1 \
     --fused-decode-crop \
     --use-multi-epochs-loader \
-    --use-zero \
+    --optimizer sgd \
+    --wd 5e-4 \
     --pretrain-model /mnt/lustre/chenguo/petrelfs/workspace/LongAVION/work_dirs/lavila_pretrain_baseline_vitb_bs512_timemamba_like_timesformer/checkpoint_best.pt \
