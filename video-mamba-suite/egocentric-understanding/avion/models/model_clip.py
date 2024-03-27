@@ -584,7 +584,7 @@ def CLIP_TimeSformerB16(
         output_dim=project_embed_dim
     )
     text_model = TextTransformer(context_length=context_length, vocab_size=49408, width=512, heads=8, layers=12, output_dim=project_embed_dim, causal_mask=not use_bidirectional_lm)
-    # enable_grad_checkpointing(vision_model, use_grad_checkpointing)
+    enable_grad_checkpointing(vision_model, use_grad_checkpointing)
     enable_grad_checkpointing(text_model, use_grad_checkpointing)
     model = CLIP(embed_dim=project_embed_dim, vision_model=vision_model, text_model=text_model, freeze_temperature=freeze_temperature)
     

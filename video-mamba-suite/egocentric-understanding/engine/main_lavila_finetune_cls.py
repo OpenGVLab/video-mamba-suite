@@ -22,6 +22,7 @@ from timm.data.mixup import Mixup
 from timm.loss import LabelSmoothingCrossEntropy, SoftTargetCrossEntropy
 from timm.utils import accuracy
 
+from avion.utils.train_utils import init_dist_slurm
 from avion.data.clip_dataset import get_downstream_dataset
 from avion.data.tokenizer import tokenize
 from avion.data.transforms import Permute
@@ -94,7 +95,7 @@ def get_args_parser():
     parser.add_argument('--warmup-epochs', default=2, type=int)
     parser.add_argument('--start-epoch', default=0, type=int)
     parser.add_argument('--batch-size', default=32, type=int, help='number of samples per-device/per-gpu')
-    parser.add_argument('--optimizer', default=['adamw', 'sgd'], type=str)
+    parser.add_argument('--optimizer', default='adamw', choices=['adamw', 'sgd'], type=str)
     parser.add_argument('--lr', default=3e-3, type=float)
     parser.add_argument('--lr-start', default=1e-6, type=float, help='initial warmup lr')
     parser.add_argument('--lr-end', default=1e-5, type=float, help='minimum final lr')
@@ -102,7 +103,7 @@ def get_args_parser():
     parser.add_argument('--wd', default=0.05, type=float)
     parser.add_argument('--betas', default=(0.9, 0.999), nargs=2, type=float)
     parser.add_argument('--eps', default=1e-8, type=float)
-    parser.add_argument('--eval-freq', default=5, type=int)
+    parser.add_argument('--eval-freq', default=1, type=int)
     parser.add_argument('--disable-amp', action='store_true', help='disable mixed-precision training (requires more memory and compute)')
     parser.add_argument('--grad-clip-norm', default=None, type=float)
     # system
@@ -125,7 +126,7 @@ def get_args_parser():
 
 
 def main(args):
-    dist_utils.init_distributed_mode(args)
+    init_dist_slurm(args)
     dist_utils.random_seed(args.seed, dist_utils.get_rank())
 
     if args.pretrain_model:
@@ -418,7 +419,7 @@ def train(train_loader, transform_gpu, model, criterion, optimizer, scaler, epoc
 
     end = time.time()
 
-    for data_iter, (videos, target) in enumerate(train_loader):
+    for data_iter, (uid, videos, target) in enumerate(train_loader):
         optim_iter = data_iter // args.update_freq
 
         # measure data loading time
@@ -523,7 +524,7 @@ def validate(val_loader, transform_gpu, model, args, num_videos):
     with amp.autocast(enabled=not args.disable_amp):
         with torch.no_grad():
             end = time.time()
-            for i, (videos, targets) in enumerate(val_loader):
+            for i, (uid, videos, targets) in enumerate(val_loader):
                 # measure data loading time
                 data_time.update(time.time() - end)
                 if isinstance(videos, torch.Tensor):

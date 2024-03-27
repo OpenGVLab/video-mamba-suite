@@ -394,7 +394,7 @@ class VideoClassyDataset(VideoCaptionDatasetBase):
         self.sparse_sample = sparse_sample
 
     def __getitem__(self, i):
-        frames, label = self.get_raw_item(
+        vid_path, frames, label = self.get_raw_item(
             i, is_training=self.is_training,
             chunk_len=self.chunk_len,
             num_clips=self.num_clips,
@@ -422,7 +422,7 @@ class VideoClassyDataset(VideoCaptionDatasetBase):
             else:
                 label = self.label_mapping[label]
 
-        return frames, label
+        return vid_path, frames, label
 
 
 def get_downstream_dataset(transform, crop_size, args, subset='train', label_mapping=None):

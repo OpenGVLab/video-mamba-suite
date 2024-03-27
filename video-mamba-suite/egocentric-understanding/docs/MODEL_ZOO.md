@@ -27,7 +27,7 @@
 
 
 
-| Method                |  V2T mAP |  T2V mAP |  Avg mAP | V2T nDCG | T2V nDCG | Avg nDCG | Train shell | Infer shell |
+| Method |  V2T mAP |  T2V mAP |  Avg mAP | V2T nDCG | T2V nDCG | Avg nDCG | Train shell | Infer shell |
 |-----------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
 | TimeSformer (Vanilla) |   29.2   |   21.8   |   25.5   |   30.1   |   27.1   |   28.6   | [train.sh](../scripts/pretrain/run_slurm_pretrain_bs512_timesformer.sh) | [infer.sh](../scripts/mir_zs/run_slurm_lavila_pretrain_bs512_timesformer_infer_mir_f4.sh) |
 | TimeSformer (Frozen)  |   29.8   |   22.2   |   26.0   |   30.6   |   27.5   |   29.0   | [train.sh](../scripts/pretrain/run_slurm_pretrain_bs512_timesformer_frozenintime.sh) | [infer.sh](../scripts/mir_zs/run_slurm_lavila_pretrain_bs512_timesformer_like_frozen_infer_mir_f4.sh) |

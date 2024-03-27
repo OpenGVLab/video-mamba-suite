@@ -222,7 +222,7 @@ class TimeMamba(nn.Module):
         self.num_classes = num_classes
         self.num_features = self.embed_dim = embed_dim  # num_features for consistency with other models
         self.num_frames = num_frames
-        self.embed_dim = embed_dim
+        self.width = self.embed_dim = embed_dim
         self.output_dim = output_dim
         scale = embed_dim ** -0.5
         norm_layer = norm_layer or partial(nn.LayerNorm, eps=1e-6)

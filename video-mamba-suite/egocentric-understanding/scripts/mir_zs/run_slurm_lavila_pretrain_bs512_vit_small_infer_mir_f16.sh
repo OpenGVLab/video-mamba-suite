@@ -4,7 +4,7 @@ export MASTER_PORT=$((12000 + $RANDOM % 20000))
 set -x
 
 
-OUTPUT_DIR="./work_dirs/lavila_pretrain_baseline_vitb_bs512_timesformer"
+OUTPUT_DIR="./work_dirs/lavila_pretrain_baseline_deit_small_bs512_gpu8_f16"
 DATA_ROOT="s-in-hdd:s3://videos/ego4d/videos_short320_chunked_15s/"
 DATA_ROOT_VAL="s-in-hdd:s3://videos/epic/videos_short320_chunked_15s/"
 VIDEO_CHUNK_LENGTH=15

@@ -113,11 +113,11 @@ Supported tasks:
 ### Related dataset resources:
 
 
-| |  | | | |
+<!-- | |  | | | |
 |:----:|:-----:|:----------------:|:-------:|:-------:|
 |[THUMOS-14]() | [ActivityNet]() | [HACS Segment]() | [FineAction]() | [GTEA]() |
 |[YouCook2]() | [Breakfast]() | [FineAction]() | [Epic-kitchen-100]() | [Ego4D]() |
-|[EgoSchema]() | [QvHighlight]() | [Charade-STA]() |  |  |
+|[EgoSchema]() | [QvHighlight]() | [Charade-STA]() |  |  | -->
 
 
 
