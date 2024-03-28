@@ -73,6 +73,7 @@ def get_args_parser():
     # training
     parser.add_argument('--use-zero', action='store_true', dest='use_zero', help='use ZeRO optimizer')
     parser.add_argument('--no-use-zero', action='store_false', dest='use_zero', help='use ZeRO optimizer')
+    parser.add_argument('--use-bf16', action='store_true', dest='use_bf16', help='use bfloat16')
     parser.set_defaults(use_zero=False)
     parser.add_argument('--epochs', default=100, type=int)
     parser.add_argument('--warmup-epochs', default=1, type=int)
@@ -88,6 +89,7 @@ def get_args_parser():
     parser.add_argument('--eps', default=1e-8, type=float)
     parser.add_argument('--eval-freq', default=1, type=int)
     parser.add_argument('--disable-amp', action='store_true', help='disable mixed-precision training (requires more memory and compute)')
+    
     parser.add_argument('--grad-clip-norm', default=None, type=float)
     # system
     parser.add_argument('--print-freq', default=10, type=int, help='print frequency')
@@ -407,7 +409,7 @@ def train(train_loader, transform_gpu, model, criterion, optimizer, scaler, epoc
         tic = time.time()
         # compute output
         if args.update_freq == 1:
-            with amp.autocast(enabled=not args.disable_amp):
+            with amp.autocast(enabled=not args.disable_amp, dtype=torch.bfloat16 if args.use_bf16 else torch.float16):
                 if args.fused_decode_crop and len(transform_gpu) > 0:
                     inputs[0] = inputs[0].permute(0, 4, 1, 2, 3)
                     inputs[0] = transform_gpu(inputs[0])
@@ -417,7 +419,7 @@ def train(train_loader, transform_gpu, model, criterion, optimizer, scaler, epoc
         else:
             # First, cache the features without any gradient tracking.
             with torch.no_grad():
-                with amp.autocast(enabled=not args.disable_amp):
+                with amp.autocast(enabled=not args.disable_amp, dtype=torch.bfloat16 if args.use_bf16 else torch.float16):
                     chunk_image_features, chunk_text_features, _ = model(images, texts)
                 accum_image_features.append(chunk_image_features)
                 accum_text_features.append(chunk_text_features)
@@ -437,7 +439,7 @@ def train(train_loader, transform_gpu, model, criterion, optimizer, scaler, epoc
             for j in range(args.accum_freq):
                 images = accum_images[j]
                 texts = accum_texts[j]
-                with amp.autocast(enabled=not args.disable_amp):
+                with amp.autocast(enabled=not args.disable_amp, dtype=torch.bfloat16 if args.use_bf16 else torch.float16):
                     chunk_image_features, chunk_text_features, logit_scale = model(images, texts)
                     image_features = torch.cat(
                         accum_image_features[:j] + [chunk_image_features] + accum_image_features[j + 1:])
@@ -502,7 +504,7 @@ def validate_mir(val_loader, transform_gpu, model, criterion, args):
     all_video_embed = [[] for _ in range(args.world_size)]
     all_text_embed = [[] for _ in range(args.world_size)]
     total_num = 0
-    with amp.autocast(enabled=not args.disable_amp):
+    with amp.autocast(enabled=not args.disable_amp, dtype=torch.bfloat16 if args.use_bf16 else torch.float16):
         with torch.no_grad():
             end = time.time()
             for i, inputs in enumerate(val_loader):

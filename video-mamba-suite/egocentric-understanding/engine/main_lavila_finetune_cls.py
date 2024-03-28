@@ -90,6 +90,7 @@ def get_args_parser():
     # training
     parser.add_argument('--use-zero', action='store_true', dest='use_zero', help='use ZeRO optimizer')
     parser.add_argument('--no-use-zero', action='store_false', dest='use_zero', help='use ZeRO optimizer')
+    parser.add_argument('--use-bf16', action='store_true', dest='use_bf16', help='use bfloat16')
     parser.set_defaults(use_zero=False)
     parser.add_argument('--epochs', default=100, type=int)
     parser.add_argument('--warmup-epochs', default=2, type=int)
@@ -449,7 +450,7 @@ def train(train_loader, transform_gpu, model, criterion, optimizer, scaler, epoc
 
         tic = time.time()
         # compute output
-        with amp.autocast(enabled=not args.disable_amp):
+        with amp.autocast(enabled=not args.disable_amp, dtype=torch.bfloat16 if args.use_bf16 else torch.float16):
             output = model(videos_mixed)
             loss = criterion(output, targets_mixed)
             loss /= args.update_freq
@@ -471,7 +472,7 @@ def train(train_loader, transform_gpu, model, criterion, optimizer, scaler, epoc
         # torch.cuda.empty_cache()
         model_time.update(time.time() - tic)
 
-        output = torch.softmax(output, dim=1)
+        output = torch.softmax(output, dim=1).to(torch.float16)
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
         losses.update(loss.item(), videos.size(0))
         metrics['Acc@1'].update(acc1.item(), videos.size(0))
@@ -521,7 +522,7 @@ def validate(val_loader, transform_gpu, model, args, num_videos):
     all_probs = [[] for _ in range(args.world_size)]
     all_targets = [[] for _ in range(args.world_size)]
     total_num = 0
-    with amp.autocast(enabled=not args.disable_amp):
+    with amp.autocast(enabled=not args.disable_amp, dtype=torch.bfloat16 if args.use_bf16 else torch.float16):
         with torch.no_grad():
             end = time.time()
             for i, (uid, videos, targets) in enumerate(val_loader):
@@ -537,7 +538,7 @@ def validate(val_loader, transform_gpu, model, args, num_videos):
                         crop = transform_gpu(crop)
                     logits = model(crop)
                     logits_allcrops.append(logits)
-                logits_allcrops = torch.stack(logits_allcrops, 1)
+                logits_allcrops = torch.stack(logits_allcrops, 1).to(torch.float16)
                 probs_allcrops = torch.softmax(logits_allcrops, dim=2)
                 targets = targets.cuda(args.gpu, non_blocking=True)
                 targets_repeated = torch.repeat_interleave(targets, len(videos))

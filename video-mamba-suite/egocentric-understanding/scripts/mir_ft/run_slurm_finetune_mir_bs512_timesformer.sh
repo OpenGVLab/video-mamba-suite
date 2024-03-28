@@ -43,4 +43,5 @@ srun -p ${PARTITION} \
     --fused-decode-crop \
     --use-multi-epochs-loader \
     --use-zero \
+    --use-bf16 \
     --pretrain-model /mnt/petrelfs/chenguo/workspace/video-mamba-suite-data/model_zoo/clip_timesformer_vanilla_base_bs512_f4.pt \

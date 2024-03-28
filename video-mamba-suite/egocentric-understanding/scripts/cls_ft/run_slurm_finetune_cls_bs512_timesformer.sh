@@ -43,4 +43,5 @@ srun -p ${PARTITION} \
     --use-multi-epochs-loader \
     --optimizer sgd \
     --wd 5e-4 \
+    --use-bf16 \
     --pretrain-model /mnt/petrelfs/chenguo/workspace/video-mamba-suite-data/model_zoo/clip_timesformer_vanilla_base_bs512_f4.pt \

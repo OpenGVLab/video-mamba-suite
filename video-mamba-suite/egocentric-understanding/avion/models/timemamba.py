@@ -99,10 +99,11 @@ class SpaceTimeBlock(nn.Module):
 
     def __init__(self, dim, num_heads, mlp_ratio=4., qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
                  drop_path=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm, time_init='zeros',
-                 attention_style='frozen-in-time', is_tanh_gating=False, use_flash_attn=False):
+                 attention_style='frozen-in-time', is_tanh_gating=False, use_flash_attn=False, 
+                 use_checkpointing=False):
         super().__init__()
 
-
+        self.use_checkpointing = use_checkpointing
 
         self.norm1 = norm_layer(dim)
         self.use_flash_attn = use_flash_attn
@@ -125,8 +126,8 @@ class SpaceTimeBlock(nn.Module):
 
         self.attention_style = attention_style
 
-
-    def forward(self, x, time_n, space_f, use_checkpoint=False):
+    
+    def forward(self, x, time_n, space_f):
 
         init_cls_token = x[:, :1]
         res_x = x

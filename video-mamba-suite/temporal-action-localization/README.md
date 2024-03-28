@@ -4,7 +4,7 @@ Implementation for Mamba-based ActionFormer (ECCV 2022)
 This codebase is built up on temporal action localization of [InternVideo](https://arxiv.org/abs/2212.03191).
 
 
-We use InternVideo2-1B and InternVideo2-6B from our InternVideo2 as backbones for feature extraction. The details can be found in [InternVideo2]() paper (to be released soon)。
+We use InternVideo2-1B and InternVideo2-6B from our InternVideo2 as backbones for feature extraction. The details can be found in [InternVideo2](https://arxiv.org/abs/2403.15377) paper (to be released soon)。
 
 
 ## Results 

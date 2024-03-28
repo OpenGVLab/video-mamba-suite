@@ -35,11 +35,13 @@ srun -p ${PARTITION} \
     --video-chunk-length ${VIDEO_CHUNK_LENGTH} \
     --clip-length ${CLIP_LENGTH} \
     --clip-stride ${CLIP_STRIDE} \
-    --batch-size 32 \
+    --batch-size 64 \
     --use-flash-attn \
     --use-fast-conv1 \
+    --grad-checkpointing \
     --fused-decode-crop \
     --use-multi-epochs-loader \
     --optimizer sgd \
     --wd 5e-4 \
+    --use-bf16 \
     --pretrain-model /mnt/lustre/chenguo/petrelfs/workspace/LongAVION/work_dirs/lavila_pretrain_baseline_vitb_bs512_timemamba_like_timesformer/checkpoint_best.pt \
