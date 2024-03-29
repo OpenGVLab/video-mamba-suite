@@ -13,11 +13,11 @@ CLIP_STRIDE=4
 
 PARTITION=$1
 JOB_NAME=$2
-GPUS=${GPUS:-8}
+GPUS=${GPUS:-16}
 GPUS_PER_NODE=${GPUS_PER_NODE:-8}
 CPUS_PER_TASK=${CPUS_PER_TASK:-1}
-SRUN_ARGS=${SRUN_ARGS:-"--quotatype=spot --async -o ${OUTPUT_DIR}/slurm.log"}
-# SRUN_ARGS=${SRUN_ARGS:-""}
+# SRUN_ARGS=${SRUN_ARGS:-"--quotatype=spot --async -o ${OUTPUT_DIR}/slurm.log"}
+SRUN_ARGS=${SRUN_ARGS:-""}
 PY_ARGS=${@:4}  # Any arguments from the forth one are captured by this
 
 PYTHONPATH="$(dirname $0)/..":$PYTHONPATH \
@@ -44,6 +44,7 @@ srun -p ${PARTITION} \
     --use-fast-conv1 \
     --freeze-temperature \
     --fused-decode-crop \
+    --use-bf16 \
     --fix-lr \
 
 

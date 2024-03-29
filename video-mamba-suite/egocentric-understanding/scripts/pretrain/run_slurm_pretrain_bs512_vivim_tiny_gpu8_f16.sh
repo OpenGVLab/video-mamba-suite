@@ -42,6 +42,7 @@ srun -p ${PARTITION} \
     --use-fast-conv1 \
     --freeze-temperature \
     --fused-decode-crop \
+    --use-bf16 \
     --fix-lr \
 
 

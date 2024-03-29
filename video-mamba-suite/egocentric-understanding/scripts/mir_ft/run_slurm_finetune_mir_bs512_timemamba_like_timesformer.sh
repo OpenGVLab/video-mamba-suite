@@ -45,6 +45,7 @@ srun -p ${PARTITION} \
     --use-zero \
     --use-bf16 \
     --pretrain-model /mnt/lustre/chenguo/petrelfs/workspace/LongAVION/work_dirs/lavila_pretrain_baseline_vitb_bs512_timemamba_like_timesformer/checkpoint_best.pt \
+    --resume ${OUTPUT_DIR}/checkpoint.pt 
 
 
 

@@ -164,6 +164,8 @@ ckpt_*/
 **/datasets/Ego4D/
 **/datasets/EK100/
 
+**/OpenTAD/
+
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
