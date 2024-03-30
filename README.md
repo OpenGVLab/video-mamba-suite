@@ -96,7 +96,7 @@ cd ..
 | task | supported datasets |
 |:----|:-------|
 |[Zero-shot/Finetuned Multi-instance Retrieval](./video-mamba-suite/egocentric-understanding/) | Epic-kitchen-100 | 
-|[Finetuned Action Recognition]() | Kinetics-400 | 
+|[Finetuned Action Recognition](./video-mamba-suite/action-recognition/) | Kinetics-400 | 
 
 
 
