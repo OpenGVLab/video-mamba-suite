@@ -10,8 +10,8 @@
 
 | Model                   | Pretrain-I | Pretrain-V | Finetuned | #Frame | Weight |
 |-------------------------|------------|------------|-----------|--------|--------|
-| ViViM-T                 | deit,IN1K  | K400   | -         | 16x3x4     | 🤗 [HF link](https://huggingface.co/cg1177/video-mamba-suite/blob/main/deit_vivim_tiny_k400_f16.pt)       |
-| ViViM-S                 | deit,IN1K  | K400   | -         | 16x3x4     | 🤗 [HF link](https://huggingface.co/cg1177/video-mamba-suite/blob/main/deit_vivim_small_k400_f16.pt)       |
+| ViViM-T                 | deit,IN1K  | -   | K400         | 16x3x4     | 🤗 [HF link](https://huggingface.co/cg1177/video-mamba-suite/blob/main/deit_vivim_tiny_k400_f16.pt)       |
+| ViViM-S                 | deit,IN1K  | -   | K400         | 16x3x4     | 🤗 [HF link](https://huggingface.co/cg1177/video-mamba-suite/blob/main/deit_vivim_small_k400_f16.pt)       |
 
 
 # Models and Usage
