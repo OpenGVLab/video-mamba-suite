@@ -165,8 +165,12 @@ publish_model.py
 **/datasets/Ego4D/
 **/datasets/EK100/
 
+# E2E-TAD
 **/OpenTAD/
 
+# AR
+**/exp/
+**/action-recognition/
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
