@@ -244,7 +244,6 @@ def main(args):
             epoch = checkpoint['epoch'] if 'epoch' in checkpoint else 0
             args.start_epoch = epoch
             result = model.load_state_dict(checkpoint['state_dict'], strict=False)
-            print(result)
             optimizer.load_state_dict(checkpoint['optimizer']) if 'optimizer' in checkpoint else ()
             scaler.load_state_dict(checkpoint['scaler']) if 'scaler' in checkpoint else ()
             best_acc1 = checkpoint['best_acc1']

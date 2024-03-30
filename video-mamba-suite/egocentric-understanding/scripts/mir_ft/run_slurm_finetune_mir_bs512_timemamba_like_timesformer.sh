@@ -42,10 +42,8 @@ srun -p ${PARTITION} \
     --grad-checkpointing \
     --fused-decode-crop \
     --use-multi-epochs-loader \
-    --use-zero \
     --use-bf16 \
-    --pretrain-model /mnt/lustre/chenguo/petrelfs/workspace/LongAVION/work_dirs/lavila_pretrain_baseline_vitb_bs512_timemamba_like_timesformer/checkpoint_best.pt \
-    --resume ${OUTPUT_DIR}/checkpoint.pt 
+    --pretrain-model /mnt/petrelfs/chenguo/workspace/video-mamba-suite-data/model_zoo/clip_timemamba_vanilla_base_bs512_f4.pt \
 
 
 

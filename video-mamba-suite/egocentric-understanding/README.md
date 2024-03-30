@@ -36,14 +36,14 @@ See [INSTALL.md](docs/INSTALL.md) to install this code.
 
 | Method                |  V2T mAP |  T2V mAP |  Avg mAP | V2T nDCG | T2V nDCG | Avg nDCG |
 |-----------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
-| TimeSformer (Vanilla) |   49.1  |   39.3   |   44.2   |   60.0   |   57.6   |   58.8   |
-| TimeMamba (Ours)   |   **50.3**   |   **40.3**   |   **45.3**   |   **62.4**   |   **59.2**   |   **60.9**   |
+| TimeSformer (Vanilla) |   52.2  |   44.2   |   48.2   |   64.0   |   61.5   |   62.7   |
+| TimeMamba (Ours)   |   **52.4**   |   **45.4**   |   **48.9**   |   **65.9**   |   **63.3**   |   **64.6**   |
 
 ### 3. Finetuned Action Recognition
 | Method                | Verb Top1 | Noun Top1 | Action Top1 | Action Top5 |
 |-----------------------|:---------:|:---------:|:-----------:|:-----------:|
-| TimeSformer (Vanilla) |    63.8   |    52.4   |     41.3    |     60.4    |
-| TimeMamba (Ours)   |  **66.6** |  **53.3** |   **42.8**  |   **63.2**  |
+| TimeSformer (Vanilla) |    65.2   |    55.0   |     44.5    |     62.4    |
+| TimeMamba (Ours)   |  **68.5** |  **55.8** |   **46.1**  |   **63.8**  |
 
 
 For more details, please refer to [MODEL_ZOO](./docs/MODEL_ZOO.md).

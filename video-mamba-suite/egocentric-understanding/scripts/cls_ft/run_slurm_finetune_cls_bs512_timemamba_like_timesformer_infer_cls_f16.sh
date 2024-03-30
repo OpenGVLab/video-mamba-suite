@@ -13,11 +13,11 @@ CLIP_STRIDE=4
 
 PARTITION=$1
 JOB_NAME=$2
-GPUS=${GPUS:-8}
-GPUS_PER_NODE=${GPUS_PER_NODE:-8}
+GPUS=${GPUS:-1}
+GPUS_PER_NODE=${GPUS_PER_NODE:-1}
 CPUS_PER_TASK=${CPUS_PER_TASK:-1}
-SRUN_ARGS=${SRUN_ARGS:-"--quotatype=spot --async -o ${OUTPUT_DIR}/slurm.log"}
-# SRUN_ARGS=${SRUN_ARGS:-""}
+# SRUN_ARGS=${SRUN_ARGS:-"--quotatype=spot --async -o ${OUTPUT_DIR}/slurm.log"}
+SRUN_ARGS=${SRUN_ARGS:-""}
 PY_ARGS=${@:4}  # Any arguments from the forth one are captured by this
 
 PYTHONPATH="$(dirname $0)/..":$PYTHONPATH \
@@ -45,3 +45,5 @@ srun -p ${PARTITION} \
     --wd 5e-4 \
     --use-bf16 \
     --pretrain-model /mnt/petrelfs/chenguo/workspace/video-mamba-suite-data/model_zoo/clip_timemamba_vanilla_base_bs512_f4.pt \
+    --resume /mnt/petrelfs/chenguo/workspace/video-mamba-suite-data/model_zoo/clip_timemamba_vanilla_base_bs512_f4_ft_ek100_cls_f16.pt \
+    --evaluate

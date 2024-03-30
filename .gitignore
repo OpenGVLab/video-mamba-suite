@@ -159,12 +159,14 @@ batchscript-*
 ckpt_*/
 
 # ego
+publish_model.py
 
 **/work_dirs/
 **/datasets/Ego4D/
 **/datasets/EK100/
 
 **/OpenTAD/
+
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
