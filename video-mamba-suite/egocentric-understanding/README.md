@@ -31,15 +31,26 @@ See [INSTALL.md](docs/INSTALL.md) to install this code.
 | ViViM-T (Ours) | 16 |   23.31   |   17.21   |   20.26   |   27.40   |   24.30   |   25.80   |
 | ViViM-S (Ours) | 16 | **26.00** | **19.60** | **22.80** | **28.20** | **25.30** | **26.70** |
 
+### 2. Long-term Video Question-Answer on EgoSchema
 
-### 2. Finetuned Multi-instance Retrieval
+
+#### 2.1 Video Temporal Adapter
+
+| Method                | #Frame | Frame Sampling | Acc (full set) |
+|-----------------------|:--------:|:--------:|:--------:|
+| TimeSformer (Vanilla) | 16 |  Uniform |   38.52  |  
+| TimeMamba (Ours) | 16 |  Uniform |   38.70     | 
+
+
+
+### 3. Finetuned Multi-instance Retrieval
 
 | Method                |  V2T mAP |  T2V mAP |  Avg mAP | V2T nDCG | T2V nDCG | Avg nDCG |
 |-----------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
 | TimeSformer (Vanilla) |   52.2  |   44.2   |   48.2   |   64.0   |   61.5   |   62.7   |
 | TimeMamba (Ours)   |   **52.4**   |   **45.4**   |   **48.9**   |   **65.9**   |   **63.3**   |   **64.6**   |
 
-### 3. Finetuned Action Recognition
+### 4. Finetuned Action Recognition
 | Method                | Verb Top1 | Noun Top1 | Action Top1 | Action Top5 |
 |-----------------------|:---------:|:---------:|:-----------:|:-----------:|
 | TimeSformer (Vanilla) |    65.2   |    55.0   |     44.5    |     62.4    |
