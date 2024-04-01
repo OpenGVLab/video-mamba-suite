@@ -44,12 +44,20 @@
 | ViViM-T (Ours) | 16 |   23.31   |   17.21   |   20.26   |   27.40   |   24.30   |   25.80   |[train.sh](../scripts/pretrain/run_slurm_pretrain_bs512_vivim_tiny_gpu8_f16.sh) | [infer.sh](../scripts/mir_zs/run_slurm_lavila_pretrain_bs512_vivim_tiny_infer_mir_f16.sh) |
 | ViViM-S (Ours) | 16 | **26.00** | **19.60** | **22.80** | **28.20** | **25.30** | **26.70** |[train.sh](../scripts/pretrain/run_slurm_pretrain_bs512_vivim_small_gpu8_f16.sh) | [infer.sh](../scripts/mir_zs/run_slurm_lavila_pretrain_bs512_vivim_small_infer_mir_f16.sh) |
 
-### 2. Long-term Video Question-Answer
+### 2. Long-term Video Question-Answer on EgoSchema
 
-### 3. Finetuned Multi-instance Retrieval on EK100
+#### Notice
+In our initial paper, we demonstrated results achieved by densely sampling frames from the beginning of the video. However, further study reveals that uniformly sampling a few frames from the entire video can lead to samely great performance. Interestingly, despite this, we have observed sometimes TimeSformer outperforms TimeMamba with uniform sampling. On the other hand, when sampling from the beginning of the video similar to scanning, TimeMamba demonstrates superior results compared to TimeSformer, as outlined in the paper.
 
-| Method                | #Frame | Frame Sampling | Acc (full set) | Train shell | Infer shell |
-|-----------------------|:--------:|:--------:|:--------:|:--------:|:--------:|
+In our study, we find using the template `Is it {Answer}` without questions can always yield better performance. It is due to that the training data of Ego4D does not contain questions.
+
+
+
+
+| Method                | #Frame | Frame Sampling | Acc (full set) | Infer shell |
+|-----------------------|:--------:|:--------:|:--------:|:--------:|
+| TimeSformer (Vanilla) | 16 |  Uniform |   38.52     |  [infer.sh](../scripts/egoschema_zs/run_slurm_pretrain_bs512_timesformer_infer_egoschema.sh) |
+| TimeMamba (Ours) | 16 |  Uniform |   38.70     |  [infer.sh](../scripts/egoschema_zs/run_slurm_pretrain_bs512_timemamba_like_timesformer_infer_egoschema.sh) |
 
 
 
@@ -60,9 +68,8 @@
 | TimeSformer (Vanilla) | 4->16 |  52.2  |   44.2   |   48.2   |   64.0   |   61.5   |   62.7   | [train.sh](../scripts/mir_ft/run_slurm_finetune_cls_bs512_timesformer.sh) | [infer.sh](../scripts/mir_ft/run_slurm_finetune_cls_bs512_timesformer_infer_cls_f16.sh) |
 | TimeMamba (Ours)   | 4->16 |   **52.4**   |   **45.4**   |   **48.9**   |   **65.9**   |   **63.3**   |   **64.6**   | [train.sh](../scripts/mir_ft/run_slurm_finetune_mir_bs512_timemamba_like_timesformer.sh) | [infer.sh](../scripts/mir_ft/run_slurm_finetune_mir_bs512_timemamba_like_timesformer_infer_mir_f16.sh) |
 
-### 4. Finetuned Action Recognition
+### 4. Finetuned Action Recognition on EK100
 
-#### 4.1 EK100
 | Method                | #Frame |Verb Top1 | Noun Top1 | Action Top1 | Action Top5 | Train shell | Infer shell |
 |-----------------------|:---------:|:---------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|
 | TimeSformer (Vanilla) | 4->16 |    65.2   |    55.0   |     44.5    |     62.4    | [train.sh](../scripts/cls_ft/run_slurm_finetune_cls_bs512_timesformer.sh) | [infer.sh](../scripts/cls_ft/run_slurm_finetune_cls_bs512_timesformer_infer_cls_f16.sh) |

@@ -4,17 +4,17 @@ export MASTER_PORT=$((12000 + $RANDOM % 20000))
 set -x
 
 
-OUTPUT_DIR="./work_dirs/lavila_pretrain_baseline_vitb_bs512_timemamba_like_timesformer"
+OUTPUT_DIR="./work_dirs/lavila_pretrain_baseline_vitb_bs512_timesformer"
 DATA_ROOT="s-in-hdd:s3://videos/ego4d/videos_short320_chunked_15s/"
 DATA_ROOT_VAL="/mnt/petrelfs/chenguo/data/egoschema/videos"
 VIDEO_CHUNK_LENGTH=15
-CLIP_LENGTH=4
+CLIP_LENGTH=16
 CLIP_STRIDE=16
 
 PARTITION=$1
 JOB_NAME=$2
-GPUS=${GPUS:-8}
-GPUS_PER_NODE=${GPUS_PER_NODE:-8}
+GPUS=${GPUS:-2}
+GPUS_PER_NODE=${GPUS_PER_NODE:-2}
 CPUS_PER_TASK=${CPUS_PER_TASK:-1}
 # SRUN_ARGS=${SRUN_ARGS:-"--quotatype=spot --async -o ${OUTPUT_DIR}/slurm.log"}
 SRUN_ARGS=${SRUN_ARGS:-""}
@@ -31,7 +31,7 @@ srun -p ${PARTITION} \
     ${SRUN_ARGS} \
     python -u engine/main_lavila_pretrain.py \
     --root  ${DATA_ROOT} \
-    --model CLIP_TimeMamba_like_timesformer \
+    --model CLIP_TimeSformerB16 \
     --root-val ${DATA_ROOT_VAL} \
     --output-dir ${OUTPUT_DIR} \
     --video-chunk-length ${VIDEO_CHUNK_LENGTH} \
@@ -43,11 +43,11 @@ srun -p ${PARTITION} \
     --freeze-temperature \
     --fused-decode-crop \
     --fix-lr \
-    --resume ${OUTPUT_DIR}/checkpoint_best.pt \
+    --resume /mnt/petrelfs/chenguo/workspace/video-mamba-suite-data/model_zoo/clip_timesformer_vanilla_base_ego4d4m_bs512_f4.pt \
     --evaluate \
     --evaluate-task egoschema \
     --dataset-val egoschema  \
-    --val-metadata ./datasets/downstream/video_retrieval_qa/egoschema_questions.json
+    --val-metadata ./datasets/Ego4D/egoschema_questions.json
 
 
 

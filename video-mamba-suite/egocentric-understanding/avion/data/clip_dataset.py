@@ -175,9 +175,6 @@ class VideoCaptionDatasetBase(torch.utils.data.Dataset):
         elif self.dataset == "egoschema":
             with open(metadata, "r") as f:
                 self.samples = json.load(f)
-        elif self.dataset == 'internvid-10m':
-            with open(metadata, 'r') as f:
-                self.samples = json.load(f)
         else:
             raise NotImplementedError
 
@@ -246,21 +243,6 @@ class VideoCaptionDatasetBase(torch.utils.data.Dataset):
                                   rcc_params=rcc_params,
                                   jitter=is_training)
             return vid_path, frames, '{}:{}'.format(verb, noun)
-        elif self.dataset == "internvid-10m":
-            sample = self.samples[i]
-            vid_path = sample["video"]
-            narration = sample["caption"]
-            vid_path = vid_path.replace(".mp4","")
-            frames = video_loader(self.root, vid, '.mp4',
-                        start_second, end_second,
-                        chunk_len=chunk_len,
-                        clip_length=clip_length,
-                        threads=threads,
-                        fast_rrc=fast_rrc,
-                        rrc_params=rrc_params,
-                        fast_rcc=fast_rcc,
-                        rcc_params=rcc_params,
-                        jitter=is_training)
         elif self.dataset == "egoschema":
             sample = self.samples[i]
             vid = sample["q_uid"]
@@ -269,11 +251,15 @@ class VideoCaptionDatasetBase(torch.utils.data.Dataset):
             qa_caption = []
             for i in range(5):
                 option = sample[f"option {i}"]
-                text = f"{question} Is it '{option.lower()}'"
-                # text = f"{option.lower()}, {option.lower()}, {option.lower()}"
+                text = f"Is it '{option.lower()}'"
+                # We find the results are better without using quesiton.
+                # It mainly dues to that the training data do not have the question.
                 qa_caption.append(text)
+            end_second = 99999999 
+            # end_second=99999999 is to sample uniformly frames from the whole video
+            # end_second=-1 is to sample prefix frames from the video, which can reproduce the results in the paper.
             frames = video_loader(self.root, vid, '.mp4',
-                                    0, 999999999,
+                                    0, end_second,
                                     chunk_len=-1,
                                     clip_length=clip_length,
                                     threads=threads,
