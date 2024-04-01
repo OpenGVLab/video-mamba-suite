@@ -22,7 +22,10 @@ We hope this work could provide valuable data points and insights for future res
 ## 📢 News
 
 
-(2024/03/21) The code of related tasks for [Video Temporal Modeling](#mamba-for-video-temporal-modeling) and [Cross-modal Interaction](#mamba-for-cross-modal-interaction) has been released. If there exist bug or missing packages, please submit a new issue to tell me.
+(2024/04/01) The code of related tasks for [Video Temporal Adapter](#mamba-as-video-temporal-adapter) and [Spatial-temporal modeling](#mamba-for-spatial-temporal-modeling) has been released. They contain `multi-instance retrieval`, `action recognition`, `long video quesion-answer` on [EK100](https://epic-kitchens.github.io/2024), [Kinetics400](https://deepmind.google/), and [EgoSchema](https://egoschema.github.io/). 
+If there exist bug or missing packages, please submit a new issue to tell me.
+
+(2024/03/21) The code of related tasks for [Video Temporal Modeling](#mamba-for-video-temporal-modeling) and [Cross-modal Interaction](#mamba-for-cross-modal-interaction) has been released. 
 
 (2024/03/15) 🔄The repository is public.
 
