@@ -160,6 +160,7 @@ ckpt_*/
 
 # ego
 publish_model.py
+publish_model_to_hf.py
 
 **/work_dirs/
 **/datasets/Ego4D/
