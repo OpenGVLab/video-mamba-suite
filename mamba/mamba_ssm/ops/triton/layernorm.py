@@ -474,8 +474,8 @@ def layer_norm_fn(
     return LayerNormFn.apply(x, weight, bias, residual, eps, prenorm, residual_in_fp32, is_rms_norm)
 
 
-def rms_norm_fn(x, weight, bias, residual=None, prenorm=False, residual_in_fp32=False, eps=1e-6):
-    return LayerNormFn.apply(x, weight, bias, residual, eps, prenorm, residual_in_fp32, True)
+def rms_norm_fn(x, weight, bias, residual=None, prenorm=False, residual_in_fp32=False, eps=1e-6, is_rms_norm=True):
+    return LayerNormFn.apply(x, weight, bias, residual, eps, prenorm, residual_in_fp32, is_rms_norm)
 
 
 class RMSNorm(torch.nn.Module):

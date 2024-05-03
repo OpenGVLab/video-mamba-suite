@@ -171,6 +171,7 @@ publish_model_to_hf.py
 
 # AR
 **/exp/
+!**/exp/**/*.sh
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can

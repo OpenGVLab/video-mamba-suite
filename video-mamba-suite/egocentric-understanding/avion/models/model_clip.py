@@ -925,6 +925,106 @@ def CLIP_ViViM_tiny(
     return model
 
 
+def CLIP_ViViM_tiny_hs4(
+    freeze_temperature=False,
+    use_grad_checkpointing=False,
+    use_bidirectional_lm=False,
+    context_length=77,
+    patch_dropout=0.,
+    drop_path_rate=0.,
+    num_frames=1,
+    use_fast_conv1=False,
+    use_flash_attn=False,
+    project_embed_dim=512,
+    pretrain_zoo='openai',
+    pretrain_path=None,
+    **kwargs
+):
+    # vision_model = timm.create_model('vit_base_patch16_224', num_classes=0)
+    
+    ssm_cfg = dict(
+        d_state=4
+    )
+    
+    vision_model = ViViM(
+        patch_size=16, 
+        embed_dim=192, 
+        depth=24, 
+        num_frames=num_frames,
+        rms_norm=True, 
+        residual_in_fp32=True, 
+        fused_add_norm=True, 
+        final_pool_type='mean', 
+        if_abs_pos_embed=True, 
+        if_rope=False, 
+        if_rope_residual=False, 
+        bimamba_type="v2", 
+        if_cls_token=True, 
+        if_devide_out=True, 
+        use_middle_cls_token=True, 
+        output_dim=project_embed_dim,
+        drop_path_rate=drop_path_rate,
+        ssm_cfg=ssm_cfg,
+        **kwargs)
+
+    
+    text_model = TextTransformer(context_length=context_length, vocab_size=49408, width=512, heads=8, layers=12, output_dim=project_embed_dim, causal_mask=not use_bidirectional_lm)
+    # enable_grad_checkpointing(vision_model, use_grad_checkpointing)
+    enable_grad_checkpointing(text_model, use_grad_checkpointing)
+    model = CLIP(embed_dim=project_embed_dim, vision_model=vision_model, text_model=text_model, freeze_temperature=freeze_temperature)
+    
+    if pretrain_zoo == "openai":
+        print("=> loading openai model")
+        clip_model, _ = clip.load('ViT-B/16', device='cpu')
+        # print(clip_model.state_dict().keys())
+        remapped_state_dict = remap_keys_from_open_clip_to_vit(
+            clip_model.state_dict(),
+            use_flash_attn=use_flash_attn,
+        )
+        textual_state_dict = {k:v for k,v in remapped_state_dict.items() if "textual" in k}
+        missing_keys, unexpected_keys = model.load_state_dict(textual_state_dict, strict=False)
+        print("load textual missing_keys: ", missing_keys)
+        print("load textual unexpected_keys: ", unexpected_keys)
+    else:
+        raise NotImplementedError
+    
+    
+    # overwrite visual model state
+    print("=> overwrite visual model state")
+    checkpoint = torch.load("/mnt/petrelfs/chenguo/pretrained_models/vim/Vim-tiny-midclstok/vim_t_midclstok_76p1acc.pth", map_location="cpu")
+    state_dict = checkpoint["model"]
+    # switch d_state
+    
+    old_d_state = state_dict["layers.0.mixer.A_log"].shape[1]
+    now_d_state = model.visual.layers[0].mixer.A_log.shape[1]
+    old_dt_rank = state_dict["layers.0.mixer.dt_proj.weight"].shape[1]
+    now_dt_rank = model.visual.layers[0].mixer.dt_proj.weight.shape[1]
+    
+    print("check d_state: ", old_d_state, now_d_state)
+    print("check dt_rank: ", old_dt_rank, now_dt_rank)
+    if old_d_state != now_d_state:
+        # x_proj
+        assert old_dt_rank == now_dt_rank
+        for i, module in enumerate(model.visual.layers):
+            for key in ["x_proj", "x_proj_b"]:
+                x_proj_ckpt = state_dict[f"layers.{i}.mixer.{key}.weight"]
+                x_proj_ckpt_rank = x_proj_ckpt[:old_dt_rank]
+                x_proj_ckpt_state1 = x_proj_ckpt[old_dt_rank:old_dt_rank+old_d_state]
+                x_proj_ckpt_state2 = x_proj_ckpt[old_dt_rank+old_d_state:old_dt_rank+old_d_state*2]
+                x_proj_ckpt_state1 = F.interpolate(x_proj_ckpt_state1.T.unsqueeze(0), size=now_d_state, mode="nearest").squeeze(0).T
+                x_proj_ckpt_state2 = F.interpolate(x_proj_ckpt_state2.T.unsqueeze(0), size=now_d_state, mode="nearest").squeeze(0).T
+                state_dict[f"layers.{i}.mixer.{key}.weight"] = torch.cat([x_proj_ckpt_rank, x_proj_ckpt_state1, x_proj_ckpt_state2], dim=0)
+            for key in ["A_log", "A_b_log"]:
+                A_ckpt = state_dict[f"layers.{i}.mixer.{key}"]
+                A_ckpt = F.interpolate(A_ckpt.unsqueeze(0), size=now_d_state, mode="nearest").squeeze(0)
+                state_dict[f"layers.{i}.mixer.{key}"] = A_ckpt
+    
+    missing_keys, unexpected_keys = model.visual.load_state_dict(state_dict, strict=False)
+    print("load visual missing_keys: ", missing_keys)
+    print("load visual unexpected_keys: ", unexpected_keys)
+    
+    return model
+
 def CLIP_ViViM_small(
     freeze_temperature=False,
     use_grad_checkpointing=False,

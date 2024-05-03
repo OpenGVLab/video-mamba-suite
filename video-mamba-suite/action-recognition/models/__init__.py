@@ -20,3 +20,8 @@ from .vivim import (
     vivim_tiny,
     vivim_small,
 )
+
+from .vivim_scan_norm import (
+    vivim_tiny_scan_norm,
+    vivim_small_scan_norm,
+)
