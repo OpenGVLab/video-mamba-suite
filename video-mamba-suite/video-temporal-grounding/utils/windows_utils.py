@@ -12,7 +12,7 @@ For example, assuming clip_len = 2 seconds
 def convert_clip_ids_to_windows(clip_ids):
     """ Inverse function of convert_windows_to_clip_ids
     Args:
-        clip_ids: list(int), each is a index of a clip, starting from 0
+        clip_ids: list(int), each is an index of a clip, starting from 0
 
     Returns:
         list(list(int)), each sublist contains two integers which are clip indices.
