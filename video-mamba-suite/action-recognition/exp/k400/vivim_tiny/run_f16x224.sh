@@ -5,7 +5,7 @@ JOB_NAME='vivim_tiny_f16_res224'
 OUTPUT_DIR="$(dirname $0)/$JOB_NAME"
 LOG_DIR="./logs/${JOB_NAME}"
 PREFIX='p-out-ssd:s3://k400/'
-DATA_PATH='/mnt/petrelfs/share_data/likunchang/kinetics_400/'
+DATA_PATH='/your/k400/'
 
 PARTITION='Gvlab-S1'
 GPUS=16
