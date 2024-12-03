@@ -1,3 +1,4 @@
 tensorboard
 mmengine
 joblib
+jupyterlab
